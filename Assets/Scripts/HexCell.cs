@@ -8,70 +8,7 @@ public class HexCell : MonoBehaviour {
 
 	public HexGridChunk chunk;
 
-    bool hasIncomingRiver, hasOutgoingRiver;
-    HexDirection incomingRiver, outgoingRiver;
-
-
-	//Gets incoming and outgoing river qualities for triangulating cells
-    public bool HasIncomingRiver
-    {
-        get
-        {
-            return hasIncomingRiver;
-        }
-    }
-
-    public bool HasOutgoingRiver
-    {
-        get
-        {
-            return hasOutgoingRiver;
-        }
-    }
-
-    public HexDirection IncomingRiver
-    {
-        get
-        {
-            return incomingRiver;
-        }
-    }
-
-    public HexDirection OutgoingRiver
-    {
-        get
-        {
-            return outgoingRiver;
-        }
-    }
-
-	// Returns if the cell has a river or not
-    public bool HasRiver
-    {
-        get
-        {
-            return hasIncomingRiver || hasOutgoingRiver;
-        }
-    }
-
-	// Returns whether the cell has an incoming or outgoing river
-    public bool HasRiverBeginOrEnd
-    {
-        get
-        {
-            return hasIncomingRiver != hasOutgoingRiver;
-        }
-    }
-
-    // Returns whether a river is flowing through a certain edge, regardless whether it's incoming or outgoing
-    public bool HasRiverThroughEdge(HexDirection direction)
-    {
-        return
-            hasIncomingRiver && incomingRiver == direction ||
-            hasOutgoingRiver && outgoingRiver == direction;
-    }
-
-    public Color Color {
+	public Color Color {
 		get {
 			return color;
 		}
@@ -104,24 +41,56 @@ public class HexCell : MonoBehaviour {
 			uiPosition.z = -position.y;
 			uiRect.localPosition = uiPosition;
 
-            // Makes sure that there are no uphill rivers being created:
-            // If the new elevation is higher than its neighbor, and the two share a river, the river is removed
-            if (
-                hasOutgoingRiver &&
-                elevation < GetNeighbor(outgoingRiver).elevation
-            )
-            {
-                RemoveOutgoingRiver();
-            }
-            if (
-                hasIncomingRiver &&
-                elevation > GetNeighbor(incomingRiver).elevation
-            )
-            {
-                RemoveIncomingRiver();
-            }
+			if (
+				hasOutgoingRiver &&
+				elevation < GetNeighbor(outgoingRiver).elevation
+			) {
+				RemoveOutgoingRiver();
+			}
+			if (
+				hasIncomingRiver &&
+				elevation > GetNeighbor(incomingRiver).elevation
+			) {
+				RemoveIncomingRiver();
+			}
 
-            Refresh();
+			Refresh();
+		}
+	}
+
+	public bool HasIncomingRiver {
+		get {
+			return hasIncomingRiver;
+		}
+	}
+
+	public bool HasOutgoingRiver {
+		get {
+			return hasOutgoingRiver;
+		}
+	}
+
+	public bool HasRiver {
+		get {
+			return hasIncomingRiver || hasOutgoingRiver;
+		}
+	}
+
+	public bool HasRiverBeginOrEnd {
+		get {
+			return hasIncomingRiver != hasOutgoingRiver;
+		}
+	}
+
+	public HexDirection IncomingRiver {
+		get {
+			return incomingRiver;
+		}
+	}
+
+	public HexDirection OutgoingRiver {
+		get {
+			return outgoingRiver;
 		}
 	}
 
@@ -131,9 +100,28 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	public float RiverSurfaceY {
+		get {
+			return
+				(elevation + HexMetrics.riverSurfaceElevationOffset) *
+				HexMetrics.elevationStep;
+		}
+	}
+
+	public float StreamBedY {
+		get {
+			return
+				(elevation + HexMetrics.streamBedElevationOffset) *
+				HexMetrics.elevationStep;
+		}
+	}
+
 	Color color;
 
 	int elevation = int.MinValue;
+
+	bool hasIncomingRiver, hasOutgoingRiver;
+	HexDirection incomingRiver, outgoingRiver;
 
 	[SerializeField]
 	HexCell[] neighbors;
@@ -159,97 +147,66 @@ public class HexCell : MonoBehaviour {
 		);
 	}
 
-    // Returns elevation of stream bed
-    public float StreamBedY
-    {
-        get
-        {
-            return
-                (elevation + HexMetrics.streamBedElevationOffset) *
-                HexMetrics.elevationStep;
-        }
-    }
+	public bool HasRiverThroughEdge (HexDirection direction) {
+		return
+			hasIncomingRiver && incomingRiver == direction ||
+			hasOutgoingRiver && outgoingRiver == direction;
+	}
 
-    // Sets outgoing rivers
-    public void SetOutgoingRiver(HexDirection direction)
-    {
-        // If it already has a river, the method ends
-        if (hasOutgoingRiver && outgoingRiver == direction)
-        {
-            return;
-        }
+	public void RemoveIncomingRiver () {
+		if (!hasIncomingRiver) {
+			return;
+		}
+		hasIncomingRiver = false;
+		RefreshSelfOnly();
 
-        // Makes sure there is a neighbor in the direction
-        // It also makes sure that rivers don't flow uphill, because it is impossible
-        HexCell neighbor = GetNeighbor(direction);
-        if (!neighbor || elevation < neighbor.elevation)
-        {
-            return;
-        }
+		HexCell neighbor = GetNeighbor(incomingRiver);
+		neighbor.hasOutgoingRiver = false;
+		neighbor.RefreshSelfOnly();
+	}
 
-        // Removes the outgoing river, and incoming river if it overlaps with the new one
-        RemoveOutgoingRiver();
-        if (hasIncomingRiver && incomingRiver == direction)
-        {
-            RemoveIncomingRiver();
-        }
+	public void RemoveOutgoingRiver () {
+		if (!hasOutgoingRiver) {
+			return;
+		}
+		hasOutgoingRiver = false;
+		RefreshSelfOnly();
 
-        // Adds new outgoing river information, then refreshes the cell
-        hasOutgoingRiver = true;
-        outgoingRiver = direction;
-        RefreshSelfOnly();
+		HexCell neighbor = GetNeighbor(outgoingRiver);
+		neighbor.hasIncomingRiver = false;
+		neighbor.RefreshSelfOnly();
+	}
 
-        // Sets incoming river information of neighboring cell
-        neighbor.RemoveIncomingRiver();
-        neighbor.hasIncomingRiver = true;
-        neighbor.incomingRiver = direction.Opposite();
-        neighbor.RefreshSelfOnly();
-    }
+	public void RemoveRiver () {
+		RemoveOutgoingRiver();
+		RemoveIncomingRiver();
+	}
 
-    // Removes outgoing rivers
-    public void RemoveOutgoingRiver()
-    {
-		// If does not have a river, the method ends
-        if (!hasOutgoingRiver)
-        {
-            return;
-        }
+	public void SetOutgoingRiver (HexDirection direction) {
+		if (hasOutgoingRiver && outgoingRiver == direction) {
+			return;
+		}
 
-		// If it does, it removes the property and refreshes the cell
-        hasOutgoingRiver = false;
-        RefreshSelfOnly();
+		HexCell neighbor = GetNeighbor(direction);
+		if (!neighbor || elevation < neighbor.elevation) {
+			return;
+		}
 
-        // If a cell has an incoming river, than its neighbor must have an outgoing river
-        // We remove that one as well
-        HexCell neighbor = GetNeighbor(outgoingRiver);
-        neighbor.hasIncomingRiver = false;
-        neighbor.RefreshSelfOnly();
-    }
+		RemoveOutgoingRiver();
+		if (hasIncomingRiver && incomingRiver == direction) {
+			RemoveIncomingRiver();
+		}
+		hasOutgoingRiver = true;
+		outgoingRiver = direction;
+		RefreshSelfOnly();
 
-    // Removes incoming rivers
-    // The logic works the same, but adapted to incoming rivers
-    public void RemoveIncomingRiver()
-    {
-        if (!hasIncomingRiver)
-        {
-            return;
-        }
-        hasIncomingRiver = false;
-        RefreshSelfOnly();
+		neighbor.RemoveIncomingRiver();
+		neighbor.hasIncomingRiver = true;
+		neighbor.incomingRiver = direction.Opposite();
+		neighbor.RefreshSelfOnly();
+	}
 
-        HexCell neighbor = GetNeighbor(incomingRiver);
-        neighbor.hasOutgoingRiver = false;
-        neighbor.RefreshSelfOnly();
-    }
-
-    // Removes the whole thing
-    public void RemoveRiver()
-    {
-        RemoveOutgoingRiver();
-        RemoveIncomingRiver();
-    }
-
-    void Refresh () {
+	void Refresh () {
 		if (chunk) {
 			chunk.Refresh();
 			for (int i = 0; i < neighbors.Length; i++) {
@@ -261,11 +218,7 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-	// Refreshes a single cell only
-    void RefreshSelfOnly()
-    {
-        chunk.Refresh();
-    }
-
-
+	void RefreshSelfOnly () {
+		chunk.Refresh();
+	}
 }
