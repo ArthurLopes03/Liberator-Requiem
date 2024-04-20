@@ -5,11 +5,20 @@ using System;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class HexMesh : MonoBehaviour {
 
+<<<<<<< Updated upstream
 	public bool useCollider, useColors, useUVCoordinates;
 
 	[NonSerialized] List<Vector3> vertices;
 	[NonSerialized] List<Color> colors;
 	[NonSerialized] List<Vector2> uvs;
+=======
+	public bool useCollider, useColors, useUVCoordinates, useUV2Coordinates;
+	public bool useTerrainTypes;
+
+	[NonSerialized] List<Vector3> vertices, terrainTypes;
+	[NonSerialized] List<Color> colors;
+	[NonSerialized] List<Vector2> uvs, uv2s;
+>>>>>>> Stashed changes
 	[NonSerialized] List<int> triangles;
 
 	Mesh hexMesh;
@@ -32,6 +41,15 @@ public class HexMesh : MonoBehaviour {
 		if (useUVCoordinates) {
 			uvs = ListPool<Vector2>.Get();
 		}
+<<<<<<< Updated upstream
+=======
+		if (useUV2Coordinates) {
+			uv2s = ListPool<Vector2>.Get();
+		}
+		if (useTerrainTypes) {
+			terrainTypes = ListPool<Vector3>.Get();
+		}
+>>>>>>> Stashed changes
 		triangles = ListPool<int>.Get();
 	}
 
@@ -46,6 +64,17 @@ public class HexMesh : MonoBehaviour {
 			hexMesh.SetUVs(0, uvs);
 			ListPool<Vector2>.Add(uvs);
 		}
+<<<<<<< Updated upstream
+=======
+		if (useUV2Coordinates) {
+			hexMesh.SetUVs(1, uv2s);
+			ListPool<Vector2>.Add(uv2s);
+		}
+		if (useTerrainTypes) {
+			hexMesh.SetUVs(2, terrainTypes);
+			ListPool<Vector3>.Add(terrainTypes);
+		}
+>>>>>>> Stashed changes
 		hexMesh.SetTriangles(triangles, 0);
 		ListPool<int>.Add(triangles);
 		hexMesh.RecalculateNormals();
@@ -92,6 +121,21 @@ public class HexMesh : MonoBehaviour {
 		uvs.Add(uv3);
 	}
 
+<<<<<<< Updated upstream
+=======
+	public void AddTriangleUV2 (Vector2 uv1, Vector2 uv2, Vector3 uv3) {
+		uv2s.Add(uv1);
+		uv2s.Add(uv2);
+		uv2s.Add(uv3);
+	}
+
+	public void AddTriangleTerrainTypes (Vector3 types) {
+		terrainTypes.Add(types);
+		terrainTypes.Add(types);
+		terrainTypes.Add(types);
+	}
+
+>>>>>>> Stashed changes
 	public void AddQuad (Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4) {
 		int vertexIndex = vertices.Count;
 		vertices.Add(HexMetrics.Perturb(v1));
@@ -106,6 +150,25 @@ public class HexMesh : MonoBehaviour {
 		triangles.Add(vertexIndex + 3);
 	}
 
+<<<<<<< Updated upstream
+=======
+	public void AddQuadUnperturbed (
+		Vector3 v1, Vector3 v2, Vector3 v3, Vector3 v4
+	) {
+		int vertexIndex = vertices.Count;
+		vertices.Add(v1);
+		vertices.Add(v2);
+		vertices.Add(v3);
+		vertices.Add(v4);
+		triangles.Add(vertexIndex);
+		triangles.Add(vertexIndex + 2);
+		triangles.Add(vertexIndex + 1);
+		triangles.Add(vertexIndex + 1);
+		triangles.Add(vertexIndex + 2);
+		triangles.Add(vertexIndex + 3);
+	}
+
+>>>>>>> Stashed changes
 	public void AddQuadColor (Color color) {
 		colors.Add(color);
 		colors.Add(color);
@@ -134,10 +197,37 @@ public class HexMesh : MonoBehaviour {
 		uvs.Add(uv4);
 	}
 
+<<<<<<< Updated upstream
+=======
+	public void AddQuadUV2 (Vector2 uv1, Vector2 uv2, Vector3 uv3, Vector3 uv4) {
+		uv2s.Add(uv1);
+		uv2s.Add(uv2);
+		uv2s.Add(uv3);
+		uv2s.Add(uv4);
+	}
+
+>>>>>>> Stashed changes
 	public void AddQuadUV (float uMin, float uMax, float vMin, float vMax) {
 		uvs.Add(new Vector2(uMin, vMin));
 		uvs.Add(new Vector2(uMax, vMin));
 		uvs.Add(new Vector2(uMin, vMax));
 		uvs.Add(new Vector2(uMax, vMax));
+<<<<<<< Updated upstream
+=======
+	}
+
+	public void AddQuadUV2 (float uMin, float uMax, float vMin, float vMax) {
+		uv2s.Add(new Vector2(uMin, vMin));
+		uv2s.Add(new Vector2(uMax, vMin));
+		uv2s.Add(new Vector2(uMin, vMax));
+		uv2s.Add(new Vector2(uMax, vMax));
+	}
+
+	public void AddQuadTerrainTypes (Vector3 types) {
+		terrainTypes.Add(types);
+		terrainTypes.Add(types);
+		terrainTypes.Add(types);
+		terrainTypes.Add(types);
+>>>>>>> Stashed changes
 	}
 }
