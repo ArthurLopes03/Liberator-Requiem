@@ -10,22 +10,6 @@ public class HexCell : MonoBehaviour {
 
 	public HexGridChunk chunk;
 
-<<<<<<< Updated upstream
-	public Color Color {
-		get {
-			return color;
-		}
-		set {
-			if (color == value) {
-				return;
-			}
-			color = value;
-			Refresh();
-		}
-	}
-
-=======
->>>>>>> Stashed changes
 	public int Elevation {
 		get {
 			return elevation;
@@ -44,21 +28,6 @@ public class HexCell : MonoBehaviour {
 				}
 			}
 
-<<<<<<< Updated upstream
-			if (
-				hasOutgoingRiver &&
-				elevation < GetNeighbor(outgoingRiver).elevation
-			) {
-				RemoveOutgoingRiver();
-			}
-			if (
-				hasIncomingRiver &&
-				elevation > GetNeighbor(incomingRiver).elevation
-			) {
-				RemoveIncomingRiver();
-			}
-
-=======
 			Refresh();
 		}
 	}
@@ -73,20 +42,16 @@ public class HexCell : MonoBehaviour {
 			}
 			waterLevel = value;
 			ValidateRivers();
->>>>>>> Stashed changes
 			Refresh();
 		}
 	}
 
-<<<<<<< Updated upstream
-=======
 	public bool IsUnderwater {
 		get {
 			return waterLevel > elevation;
 		}
 	}
 
->>>>>>> Stashed changes
 	public bool HasIncomingRiver {
 		get {
 			return hasIncomingRiver;
@@ -111,8 +76,6 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-<<<<<<< Updated upstream
-=======
 	public HexDirection RiverBeginOrEndDirection {
 		get {
 			return hasIncomingRiver ? incomingRiver : outgoingRiver;
@@ -130,7 +93,6 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
->>>>>>> Stashed changes
 	public HexDirection IncomingRiver {
 		get {
 			return incomingRiver;
@@ -149,16 +111,6 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-<<<<<<< Updated upstream
-	public float RiverSurfaceY {
-		get {
-			return
-				(elevation + HexMetrics.riverSurfaceElevationOffset) *
-				HexMetrics.elevationStep;
-		}
-	}
-=======
->>>>>>> Stashed changes
 
 	public float StreamBedY {
 		get {
@@ -168,9 +120,6 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-<<<<<<< Updated upstream
-	Color color;
-=======
 	public float RiverSurfaceY {
 		get {
 			return
@@ -292,7 +241,6 @@ public class HexCell : MonoBehaviour {
 	public HexCell NextWithSamePriority { get; set; }
 
 	int terrainTypeIndex;
->>>>>>> Stashed changes
 
 	int elevation = int.MinValue;
 	int waterLevel;
@@ -304,9 +252,6 @@ public class HexCell : MonoBehaviour {
 	int distance;
 
 	bool walled;
-
-	bool hasIncomingRiver, hasOutgoingRiver;
-	HexDirection incomingRiver, outgoingRiver;
 
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;
@@ -379,11 +324,7 @@ public class HexCell : MonoBehaviour {
 		}
 
 		HexCell neighbor = GetNeighbor(direction);
-<<<<<<< Updated upstream
-		if (!neighbor || elevation < neighbor.elevation) {
-=======
 		if (!IsValidRiverDestination(neighbor)) {
->>>>>>> Stashed changes
 			return;
 		}
 
@@ -393,20 +334,11 @@ public class HexCell : MonoBehaviour {
 		}
 		hasOutgoingRiver = true;
 		outgoingRiver = direction;
-<<<<<<< Updated upstream
-		RefreshSelfOnly();
-=======
 		specialIndex = 0;
->>>>>>> Stashed changes
 
 		neighbor.RemoveIncomingRiver();
 		neighbor.hasIncomingRiver = true;
 		neighbor.incomingRiver = direction.Opposite();
-<<<<<<< Updated upstream
-		neighbor.RefreshSelfOnly();
-	}
-
-=======
 		neighbor.specialIndex = 0;
 
 		SetRoad((int)direction, false);
@@ -480,7 +412,6 @@ public class HexCell : MonoBehaviour {
 		uiRect.localPosition = uiPosition;
 	}
 
->>>>>>> Stashed changes
 	void Refresh () {
 		if (chunk) {
 			chunk.Refresh();
@@ -498,8 +429,6 @@ public class HexCell : MonoBehaviour {
 
 	void RefreshSelfOnly () {
 		chunk.Refresh();
-<<<<<<< Updated upstream
-=======
 		if (Unit) {
 			Unit.ValidateLocation();
 		}
@@ -587,6 +516,5 @@ public class HexCell : MonoBehaviour {
 		Image highlight = uiRect.GetChild(0).GetComponent<Image>();
 		highlight.color = color;
 		highlight.enabled = true;
->>>>>>> Stashed changes
 	}
 }

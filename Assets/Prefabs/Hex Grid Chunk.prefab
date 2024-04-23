@@ -164,11 +164,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 10
   m_PresetInfoIsWorld: 0
-<<<<<<< Updated upstream
---- !u!1 &1000013614047726
-=======
 --- !u!1 &1000010764466194
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,38 +172,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
-  - component: {fileID: 4000013101158204}
-  - component: {fileID: 33000012513428172}
-  - component: {fileID: 23000011201693670}
-  - component: {fileID: 114000011082573560}
-  m_Layer: 0
-  m_Name: Terrain
-=======
   - component: {fileID: 4000013869009498}
   - component: {fileID: 33000012900077240}
   - component: {fileID: 23000012062966806}
   - component: {fileID: 114000013599494320}
   m_Layer: 0
   m_Name: Walls
->>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
---- !u!4 &4000013101158204
-=======
 --- !u!4 &4000013869009498
->>>>>>> Stashed changes
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
-=======
   m_GameObject: {fileID: 1000010764466194}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -713,7 +694,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
->>>>>>> Stashed changes
   m_GameObject: {fileID: 1000013614047726}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -788,11 +768,8 @@ MonoBehaviour:
   useCollider: 1
   useColors: 1
   useUVCoordinates: 0
-<<<<<<< Updated upstream
-=======
   useUV2Coordinates: 0
   useTerrainTypes: 1
->>>>>>> Stashed changes
 --- !u!1 &1000013758644280
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,11 +783,7 @@ GameObject:
   - component: {fileID: 23000011040000518}
   - component: {fileID: 114000011881523884}
   m_Layer: 0
-<<<<<<< Updated upstream
-  m_Name: Rivers
-=======
   m_Name: Roads
->>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -859,11 +832,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-<<<<<<< Updated upstream
-  - {fileID: 2100000, guid: af5fa3dd9aa9a46188be6d7b2348bd92, type: 2}
-=======
   - {fileID: 2100000, guid: e12ccd3e453f74a20804f0801490a898, type: 2}
->>>>>>> Stashed changes
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -900,11 +869,8 @@ MonoBehaviour:
   useCollider: 0
   useColors: 0
   useUVCoordinates: 1
-<<<<<<< Updated upstream
-=======
   useUV2Coordinates: 0
   useTerrainTypes: 0
->>>>>>> Stashed changes
 --- !u!1 &1000014151754808
 GameObject:
   m_ObjectHideFlags: 0
@@ -937,10 +903,7 @@ Transform:
   m_Children:
   - {fileID: 224000013515381414}
   - {fileID: 4000013101158204}
-<<<<<<< Updated upstream
-=======
   - {fileID: 4000013661239724}
->>>>>>> Stashed changes
   - {fileID: 4000011417168598}
   - {fileID: 4000011392651524}
   - {fileID: 4000010783387754}
@@ -962,13 +925,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 114000011082573560}
-<<<<<<< Updated upstream
-  rivers: {fileID: 114000011881523884}
-=======
   rivers: {fileID: 114000012954278246}
   roads: {fileID: 114000011881523884}
   water: {fileID: 114000013445900128}
   waterShore: {fileID: 114000010976435170}
   estuaries: {fileID: 114000013036081130}
   features: {fileID: 114000013279209982}
->>>>>>> Stashed changes

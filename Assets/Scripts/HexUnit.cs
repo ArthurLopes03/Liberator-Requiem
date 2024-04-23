@@ -5,8 +5,6 @@ public class HexUnit : MonoBehaviour {
 
 	public static HexUnit unitPrefab;
 
-	public static HexUnit enemyUnitPrefab;
-
 	public HexCell Location {
 		get {
 			return location;

@@ -133,18 +133,7 @@ public class HexMapEditor : MonoBehaviour {
 				}
 				return;
 			}
-            else if (Input.GetKeyDown(KeyCode.I)) {
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    DestroyUnit();
-                }
-                else
-                {
-                    CreateEnemyUnit();
-                }
-                return;
-            }
-        }
+		}
 		previousCell = null;
 	}
 
@@ -162,18 +151,7 @@ public class HexMapEditor : MonoBehaviour {
 		}
 	}
 
-    void CreateEnemyUnit()
-    {
-        HexCell cell = GetCellUnderCursor();
-        if (cell && !cell.Unit)
-        {
-            hexGrid.AddUnit(
-                Instantiate(HexUnit.enemyUnitPrefab), cell, Random.Range(0f, 360f)
-            );
-        }
-    }
-
-    void DestroyUnit () {
+	void DestroyUnit () {
 		HexCell cell = GetCellUnderCursor();
 		if (cell && cell.Unit) {
 			hexGrid.RemoveUnit(cell.Unit);

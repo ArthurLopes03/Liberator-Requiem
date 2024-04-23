@@ -12,7 +12,6 @@ public class HexGrid : MonoBehaviour {
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
 	public HexUnit unitPrefab;
-	public HexUnit enemyUnitPrefab;
 
 	public Texture2D noiseSource;
 
@@ -42,7 +41,6 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
 		HexUnit.unitPrefab = unitPrefab;
-		HexUnit.enemyUnitPrefab = enemyUnitPrefab;
 		CreateMap(cellCountX, cellCountZ);
 	}
 

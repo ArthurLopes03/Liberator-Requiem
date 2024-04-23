@@ -33,9 +33,6 @@ public static class HexMetrics {
 
 	public const float streamBedElevationOffset = -1.75f;
 
-<<<<<<< Updated upstream
-	public const float riverSurfaceElevationOffset = -0.5f;
-=======
 	public const float waterElevationOffset = -0.5f;
 
 	public const float wallHeight = 4f;
@@ -49,21 +46,17 @@ public static class HexMetrics {
 	public const float wallTowerThreshold = 0.5f;
 
 	public const float bridgeDesignLength = 7f;
->>>>>>> Stashed changes
 
 	public const float noiseScale = 0.003f;
 
 	public const int chunkSizeX = 5, chunkSizeZ = 5;
 
-<<<<<<< Updated upstream
-=======
 	public const int hashGridSize = 256;
 
 	public const float hashGridScale = 0.25f;
 
 	static HexHash[] hashGrid;
 
->>>>>>> Stashed changes
 	static Vector3[] corners = {
 		new Vector3(0f, 0f, outerRadius),
 		new Vector3(innerRadius, 0f, 0.5f * outerRadius),
@@ -137,8 +130,6 @@ public static class HexMetrics {
 			(0.5f * solidFactor);
 	}
 
-<<<<<<< Updated upstream
-=======
 	public static Vector3 GetFirstWaterCorner (HexDirection direction) {
 		return corners[(int)direction] * waterFactor;
 	}
@@ -147,7 +138,6 @@ public static class HexMetrics {
 		return corners[(int)direction + 1] * waterFactor;
 	}
 
->>>>>>> Stashed changes
 	public static Vector3 GetBridge (HexDirection direction) {
 		return (corners[(int)direction] + corners[(int)direction + 1]) *
 			blendFactor;
