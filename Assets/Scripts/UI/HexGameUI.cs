@@ -42,7 +42,7 @@ public class HexGameUI : MonoBehaviour {
 	void DoPathfinding () {
 		if (UpdateCurrentCell()) {
 			if (currentCell && selectedUnit.IsValidDestination(currentCell)) {
-				grid.FindPath(selectedUnit.Location, currentCell, 24);
+				grid.FindPath(selectedUnit.Location, currentCell, 10 * selectedUnit.moveSpeed, selectedUnit.canMove);
 			}
 			else {
 				grid.ClearPath();
@@ -51,10 +51,13 @@ public class HexGameUI : MonoBehaviour {
 	}
 
 	void DoMove () {
-		if (grid.HasPath) {
-			selectedUnit.Location = currentCell;
-			grid.ClearPath();
-		}
+        if (grid.HasPath && grid.toTileTurn <= 0)
+        {
+            selectedUnit.Location = currentCell;
+            grid.ClearPath();
+
+            selectedUnit.canMove = false;
+        }
 	}
 
 	bool UpdateCurrentCell () {

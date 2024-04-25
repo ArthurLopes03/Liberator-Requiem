@@ -46,14 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   urbanCollections:
   - prefabs:
-    - {fileID: 4000011812086372, guid: 21b1020286582424ab6d62085ed5ee87, type: 3}
-    - {fileID: 4000011812086372, guid: 5d26578fd32c84d1ab4d755ab7f23577, type: 3}
+    - {fileID: 8567899930928666849, guid: 162d8910e3dc7f94db82adf84dd254f9, type: 3}
+    - {fileID: 8367474998176318847, guid: c6f94ff16f11e8c4893cd5060aafcc91, type: 3}
   - prefabs:
-    - {fileID: 4000013436407900, guid: 89adbf41f320f4141964bfa388ba2865, type: 3}
-    - {fileID: 4000013436407900, guid: 2fad1b4af64d84c8e810f040299dec1e, type: 3}
+    - {fileID: 4650942853704202401, guid: 3ee93eb74fdaac843907d672b1721477, type: 3}
   - prefabs:
-    - {fileID: 4000013997932258, guid: bca46d0c670c447a0a5c7208498000ab, type: 3}
-    - {fileID: 4000013997932258, guid: 4c4b904516a814dc7b4433a49713c96f, type: 3}
+    - {fileID: 576824848471907537, guid: 1dd4ac7541189384db482068a294c107, type: 3}
   farmCollections:
   - prefabs:
     - {fileID: 4000011812086372, guid: 694c4113acb734a299b240d50494600c, type: 3}

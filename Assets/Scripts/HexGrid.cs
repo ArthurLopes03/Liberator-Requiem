@@ -17,6 +17,8 @@ public class HexGrid : MonoBehaviour {
 
 	public int seed;
 
+	public int toTileTurn;
+
 	public bool HasPath {
 		get {
 			return currentPathExists;
@@ -261,26 +263,37 @@ public class HexGrid : MonoBehaviour {
 		currentPathFrom = currentPathTo = null;
 	}
 
-	void ShowPath (int speed) {
+	void ShowPath (int speed, bool canMove) {
+		toTileTurn = 0;
+		int turn = 0;
 		if (currentPathExists) {
 			HexCell current = currentPathTo;
 			while (current != currentPathFrom) {
-				int turn = current.Distance / speed;
-				current.SetLabel(turn.ToString());
+				turn = current.Distance / speed;
+
+                if (!canMove)
+                {
+					turn++;
+                }
+
+                current.SetLabel(turn.ToString());
 				current.EnableHighlight(Color.white);
 				current = current.PathFrom;
+
+				if(toTileTurn < turn) { toTileTurn = turn; }
 			}
-		}
+        }
 		currentPathFrom.EnableHighlight(Color.blue);
 		currentPathTo.EnableHighlight(Color.red);
 	}
 
-	public void FindPath (HexCell fromCell, HexCell toCell, int speed) {
+
+	public void FindPath (HexCell fromCell, HexCell toCell, int speed, bool canMove) {
 		ClearPath();
 		currentPathFrom = fromCell;
 		currentPathTo = toCell;
 		currentPathExists = Search(fromCell, toCell, speed);
-		ShowPath(speed);
+		ShowPath(speed, canMove);
 	}
 
 	bool Search (HexCell fromCell, HexCell toCell, int speed) {
