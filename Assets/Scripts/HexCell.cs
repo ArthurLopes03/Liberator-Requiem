@@ -82,6 +82,21 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	public bool hasUnit
+	{
+		get
+		{
+			if(Unit == null)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+
 	public bool HasRoads {
 		get {
 			for (int i = 0; i < roads.Length; i++) {

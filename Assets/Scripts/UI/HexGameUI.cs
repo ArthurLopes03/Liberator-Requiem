@@ -7,9 +7,27 @@ public class HexGameUI : MonoBehaviour {
 
 	HexCell currentCell;
 
-	HexUnit selectedUnit;
+	public HexUnit selectedUnit;
 
-	public void SetEditMode (bool toggle) {
+	public bool playerOneTurn = true;
+
+	public HexUnit[] unitPrefabs;
+
+	HexUnit currentUnit;
+
+    private void Awake()
+    {
+        currentUnit = unitPrefabs[0];
+		HexUnit.unitPrefab = currentUnit;
+    }
+
+	public void SetUnitType(int index)
+	{
+		currentUnit = unitPrefabs[index];
+        HexUnit.unitPrefab = currentUnit;
+    }
+
+    public void SetEditMode (bool toggle) {
 		enabled = !toggle;
 		grid.ShowUI(!toggle);
 		grid.ClearPath();
@@ -21,7 +39,11 @@ public class HexGameUI : MonoBehaviour {
 				DoSelection();
 			}
 			else if (selectedUnit) {
-				if (Input.GetMouseButtonDown(1)) {
+				if(Input.GetMouseButtonDown(1) && currentCell.hasUnit)
+                {
+					DoAttack();
+				}
+				else if (Input.GetMouseButtonDown(1)) {
 					DoMove();
 				}
 				else {
@@ -32,16 +54,40 @@ public class HexGameUI : MonoBehaviour {
 	}
 
 	void DoSelection () {
-		grid.ClearPath();
-		UpdateCurrentCell();
-		if (currentCell) {
-			selectedUnit = currentCell.Unit;
+		if (playerOneTurn)
+		{
+			grid.ClearUnitHighlight();
+			grid.ClearPath();
+			UpdateCurrentCell();
+				if (currentCell)
+				{
+					if ( currentCell.Unit && currentCell.Unit.gameObject.tag == "PlayerOneUnit")
+						{ selectedUnit = currentCell.Unit; }
+					else 
+						{ Debug.Log("Cannot Select That"); }
+				}
 		}
-	}
+        if (!playerOneTurn)
+        {
+            grid.ClearUnitHighlight();
+            grid.ClearPath();
+            UpdateCurrentCell();
+            if (currentCell && currentCell.Unit.gameObject.tag == "PlayerTwoUnit")
+            {
+                selectedUnit = currentCell.Unit;
+            }
+        }
+    }
 
 	void DoPathfinding () {
 		if (UpdateCurrentCell()) {
-			if (currentCell && selectedUnit.IsValidDestination(currentCell)) {
+            if (currentCell && currentCell.hasUnit)
+            {
+				grid.ClearPath();
+				grid.ClearUnitHighlight();
+                grid.HighlightUnit(selectedUnit.Location, currentCell);
+            }
+            else if (currentCell && selectedUnit.IsValidDestination(currentCell)) {
 				grid.FindPath(selectedUnit.Location, currentCell, 10 * selectedUnit.moveSpeed, selectedUnit.canMove);
 			}
 			else {
@@ -49,6 +95,14 @@ public class HexGameUI : MonoBehaviour {
 			}
 		}
 	}
+
+	void DoAttack()
+	{
+		if(selectedUnit.canAttack && selectedUnit.Location.coordinates.DistanceTo(currentCell.coordinates) <= selectedUnit.range)
+		{
+            selectedUnit.Attack(currentCell.Unit);
+        }
+    }
 
 	void DoMove () {
         if (grid.HasPath && grid.toTileTurn <= 0)
@@ -69,4 +123,5 @@ public class HexGameUI : MonoBehaviour {
 		}
 		return false;
 	}
+
 }

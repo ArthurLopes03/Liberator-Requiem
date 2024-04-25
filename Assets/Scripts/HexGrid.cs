@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using static UnityEditor.FilePathAttribute;
 
 public class HexGrid : MonoBehaviour {
 
@@ -42,7 +43,6 @@ public class HexGrid : MonoBehaviour {
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
-		HexUnit.unitPrefab = unitPrefab;
 		CreateMap(cellCountX, cellCountZ);
 	}
 
@@ -116,7 +116,6 @@ public class HexGrid : MonoBehaviour {
 		if (!HexMetrics.noiseSource) {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
-			HexUnit.unitPrefab = unitPrefab;
 		}
 	}
 
@@ -247,6 +246,7 @@ public class HexGrid : MonoBehaviour {
 
 	public void ClearPath () {
 		if (currentPathExists) {
+
 			HexCell current = currentPathTo;
 			while (current != currentPathFrom) {
 				current.SetLabel(null);
@@ -255,10 +255,12 @@ public class HexGrid : MonoBehaviour {
 			}
 			current.DisableHighlight();
 			currentPathExists = false;
+			ClearUnitHighlight();
 		}
 		else if (currentPathFrom) {
 			currentPathFrom.DisableHighlight();
 			currentPathTo.DisableHighlight();
+			ClearUnitHighlight();
 		}
 		currentPathFrom = currentPathTo = null;
 	}
@@ -287,6 +289,34 @@ public class HexGrid : MonoBehaviour {
 		currentPathTo.EnableHighlight(Color.red);
 	}
 
+	HexCell highlightingCell;
+	HexCell selectedUnitCell;
+
+	public void HighlightUnit(HexCell selectedUnitCell,HexCell cellToHighlight)
+	{
+		ClearUnitHighlight();
+
+		selectedUnitCell.EnableHighlight(Color.blue);
+        highlightingCell = cellToHighlight;
+
+        if (selectedUnitCell.coordinates.DistanceTo(cellToHighlight.coordinates) <= selectedUnitCell.Unit.range)
+		{
+            highlightingCell.EnableHighlight(Color.red);
+        }
+        else if(selectedUnitCell.coordinates.DistanceTo(cellToHighlight.coordinates) > selectedUnitCell.Unit.range)
+		{
+			highlightingCell.EnableHighlight(Color.black);
+		}
+	}
+
+	public void ClearUnitHighlight()
+	{
+		if(highlightingCell != null)
+			highlightingCell.DisableHighlight();
+
+		if(selectedUnitCell != null)
+			selectedUnitCell.DisableHighlight();
+	}
 
 	public void FindPath (HexCell fromCell, HexCell toCell, int speed, bool canMove) {
 		ClearPath();
@@ -296,7 +326,8 @@ public class HexGrid : MonoBehaviour {
 		ShowPath(speed, canMove);
 	}
 
-	bool Search (HexCell fromCell, HexCell toCell, int speed) {
+
+    bool Search (HexCell fromCell, HexCell toCell, int speed) {
 		searchFrontierPhase += 2;
 		if (searchFrontier == null) {
 			searchFrontier = new HexCellPriorityQueue();

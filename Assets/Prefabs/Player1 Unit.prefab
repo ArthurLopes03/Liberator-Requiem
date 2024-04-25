@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4421854725932508}
   - component: {fileID: 114701888605048992}
   m_Layer: 0
-  m_Name: Unit
-  m_TagString: Untagged
+  m_Name: Player1 Unit
+  m_TagString: PlayerOneUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,12 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bba114c5e84a0f8fb19ef55b2766a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 0
+  HexUnitName: Placeholder Unit
+  UnitDescription: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+    sunt in culpa qui officia deserunt mollit anim id est laborum
+  range: 3
   moveSpeed: 2
   canMove: 1
-  attackPow: 0
-  defence: 0
-  health: 0
+  canAttack: 1
+  attackPow: 5
+  defence: 3
+  health: 5
 --- !u!1 &1926056678881898
 GameObject:
   m_ObjectHideFlags: 0

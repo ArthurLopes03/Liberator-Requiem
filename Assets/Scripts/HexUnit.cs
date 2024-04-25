@@ -4,6 +4,10 @@ using JetBrains.Annotations;
 
 public class HexUnit : MonoBehaviour {
 
+	public string HexUnitName;
+
+	public string UnitDescription;
+
 	public static HexUnit unitPrefab;
 
 	public int range;
@@ -11,6 +15,8 @@ public class HexUnit : MonoBehaviour {
 	public int moveSpeed;
 
 	public bool canMove = true;
+
+	public bool canAttack = true;
 
 	public int attackPow;
 
@@ -94,6 +100,30 @@ public class HexUnit : MonoBehaviour {
 			attackTotal += location.Elevation - enemyPosition.Elevation;
 		}
 
-		enemyUnit.health = attackTotal/defenseTotal;
+		int totalDamage = attackTotal / defenseTotal;
+
+		if( totalDamage < 1 ) { totalDamage = 1; }
+
+        enemyUnit.health -= totalDamage;
+		
+		canAttack = false;
+
+		if (enemyUnit.health <= 0 )
+		{
+			enemyUnit.Die();
+		}
+
+		Debug.Log("Attacked");
+	}
+
+	public string PrintStatline()
+	{
+		string statline = "";
+
+		statline += "ATK : " + attackPow;
+		statline += "\nDFS : " + defence;
+		statline += "\nRNG : " + range;
+
+		return statline;
 	}
 }
