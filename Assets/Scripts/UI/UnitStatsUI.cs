@@ -7,11 +7,13 @@ public class UnitStatsUI : MonoBehaviour
 {
     public HexGameUI gameUI;
 
+    public Text turnLabel;
     public Text nameTag;
     public Text descriptionTag;
     public Text healthTag;
     public Text movementTag;
     public Text statLine;
+    public Text turnCounterLabel;
 
     void Update()
     {
@@ -20,6 +22,9 @@ public class UnitStatsUI : MonoBehaviour
     
     void UpdateUI()
     {
+        turnLabel.text = gameUI.currentTurnTag;
+
+        turnCounterLabel.text = "Turn " + gameUI.turnCounter.ToString() ;
         if(gameUI.selectedUnit != null)
         {
             HexUnit unit = gameUI.selectedUnit;
