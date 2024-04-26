@@ -15,6 +15,10 @@ public class HexGameUI : MonoBehaviour {
 
 	HexUnit currentUnit;
 
+	public string currentTurnTag = "Player 1 Turn";
+
+	public int turnCounter = 1;
+
     private void Awake()
     {
         currentUnit = unitPrefabs[0];
@@ -122,6 +126,44 @@ public class HexGameUI : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	public void NextTurn()
+    {
+		grid.ClearPath();
+		grid.ClearUnitHighlight();
+
+		selectedUnit = null;
+		currentCell = null;
+
+		if (playerOneTurn)
+		{
+			playerOneTurn = false;
+			currentTurnTag = "Player 2 Turn";
+		}
+		else if (!playerOneTurn)
+		{ 
+			playerOneTurn = true;
+			currentTurnTag = "Player 1 Turn";
+			turnCounter++;
+		}
+
+
+		GameObject[] playerOneUnits = GameObject.FindGameObjectsWithTag("PlayerOneUnit");
+
+		foreach(GameObject u in playerOneUnits)
+        {
+			u.GetComponent<HexUnit>().canAttack = true;
+			u.GetComponent<HexUnit>().canMove = true;
+		}
+
+		GameObject[] playerTwoUnits = GameObject.FindGameObjectsWithTag("PlayerTwoUnit");
+
+		foreach (GameObject u in playerTwoUnits)
+		{
+			u.GetComponent<HexUnit>().canAttack = true;
+			u.GetComponent<HexUnit>().canMove = true;
+		}
 	}
 
 }
