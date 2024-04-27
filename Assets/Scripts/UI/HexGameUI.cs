@@ -76,9 +76,12 @@ public class HexGameUI : MonoBehaviour {
             grid.ClearUnitHighlight();
             grid.ClearPath();
             UpdateCurrentCell();
-            if (currentCell && currentCell.Unit.gameObject.tag == "PlayerTwoUnit")
+            if (currentCell)
             {
-                selectedUnit = currentCell.Unit;
+	            if (currentCell && currentCell.Unit.gameObject.tag == "PlayerTwoUnit")
+					{ selectedUnit = currentCell.Unit; }
+				else
+					{ Debug.Log("Cannot Select That"); }
             }
         }
     }

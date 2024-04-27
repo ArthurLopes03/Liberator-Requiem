@@ -82,7 +82,7 @@ public class HexUnit : MonoBehaviour {
 	{
 		HexCell enemyPosition = enemyUnit.Location;
 
-        int attackTotal = Mathf.FloorToInt(attackPow * (float)Random.Range(0.8f,1.5f));
+        int attackTotal = Mathf.FloorToInt(attackPow * (float)Random.Range(1f,1f));
 
 		int defenseTotal = enemyUnit.defence + enemyPosition.UrbanLevel + enemyPosition.PlantLevel;
 
@@ -100,7 +100,7 @@ public class HexUnit : MonoBehaviour {
 			attackTotal += location.Elevation - enemyPosition.Elevation;
 		}
 
-		int totalDamage = attackTotal / defenseTotal;
+		int totalDamage = Mathf.FloorToInt(attackTotal * (defenseTotal * 0.01f));
 
 		if( totalDamage < 1 ) { totalDamage = 1; }
 
@@ -113,7 +113,7 @@ public class HexUnit : MonoBehaviour {
 			enemyUnit.Die();
 		}
 
-		Debug.Log("Attacked");
+		Debug.Log("Attacked for " + totalDamage);
 	}
 
 	public string PrintStatline()
