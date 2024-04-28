@@ -100,7 +100,7 @@ public class HexUnit : MonoBehaviour {
 			attackTotal += location.Elevation - enemyPosition.Elevation;
 		}
 
-		int totalDamage = Mathf.FloorToInt(attackTotal * (defenseTotal * 0.01f));
+		int totalDamage = Mathf.FloorToInt(attackTotal * (1 - defenseTotal * 0.01f));
 
 		if( totalDamage < 1 ) { totalDamage = 1; }
 
