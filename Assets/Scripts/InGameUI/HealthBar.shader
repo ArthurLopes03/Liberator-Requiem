@@ -6,6 +6,7 @@ Shader "Unlit/HealthBar"
 		_BgTex ("Background Texture", 2D) = "black" {}
 		_Health ("Health", float) = 1
 		_MaxHealth ("Max Health", float) = 1
+		_ShowDamage ("Display Damage Ammount", float) = 0
 	}
 	SubShader
 	{
@@ -41,9 +42,8 @@ Shader "Unlit/HealthBar"
 
 			float _Health;
 			float _MaxHealth;
+			float _ShowDamage;
 
-			
-			
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -61,29 +61,40 @@ Shader "Unlit/HealthBar"
 				return o;
 			}
 
-			float BlendMode_Overlay(float base, float blend)
+			float BlendMode_Overlay(float base, float blend, float ammount)
 			{
-				return (base <= 0.5) ? 2*base*blend : 1 - 2*(1-base)*(1-blend);
+				return (base <= ammount) ? 2*base*blend : 1 - 2*(1-base)*(1-blend);
 			}
+			
 			
 			float4 frag (v2f i) : SV_Target
 			{
 				float relativeHealth = _Health / _MaxHealth;
+				float relativeDamage = _ShowDamage / _MaxHealth;
+
+				float fixedTime = saturate((sin(_Time.a * 2) + 1)/1.8);
 
 				float4 output = tex2D(_MainTex, i.uv);
 				float4 bgOutput = tex2D(_BgTex, i.uv);
+				float4 dmgOutput = lerp(output, bgOutput, fixedTime);
 
-				if(i.uv.x > relativeHealth)
+				if(i.uv.x > relativeHealth - relativeDamage)
 				{
 					output *= 0;
 				}
-				else
+				if ( i.uv.x > relativeHealth || i.uv.x < relativeHealth - relativeDamage)
+				{
+					dmgOutput *= 0;
+				}
+				if (i.uv.x < relativeHealth)
 				{
 					bgOutput *= 0;
 				}
 
+				output += dmgOutput;
 				output += bgOutput;
 
+				
 				return output;
 			}
 			ENDCG
