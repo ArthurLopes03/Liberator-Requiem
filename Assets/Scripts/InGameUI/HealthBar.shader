@@ -119,7 +119,7 @@ Shader "Unlit/HealthBar"
 				output += bgOutput;
 
 				//return borderMask;
-				return output
+				return output;
 			}
 			ENDCG
 		}
