@@ -43,10 +43,10 @@ public class healthManager : MonoBehaviour
         {
 
 
-            if (_uiManager.currentCell.Unit == _unit && _uiManager.selectedUnit.gameObject.tag != _unit.gameObject.tag)
+            if (_uiManager.currentCell.Unit == _unit && _uiManager.selectedUnit.gameObject.tag != _unit.gameObject.tag && _uiManager.selectedUnit.canAttack)
             {
 
-                _incommingDamage = _uiManager.selectedUnit.attackPow;
+                _incommingDamage = _uiManager.selectedUnit.attackPow * (1 - _unit.defence * 0.01f);
 
             }
             else
