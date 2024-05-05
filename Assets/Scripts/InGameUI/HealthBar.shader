@@ -4,9 +4,15 @@ Shader "Unlit/HealthBar"
 	{
 		_MainTex ("Heathbar Texture", 2D) = "white" {}
 		_BgTex ("Background Texture", 2D) = "black" {}
+
 		_Health ("Health", float) = 1
 		_MaxHealth ("Max Health", float) = 1
 		_ShowDamage ("Display Damage Ammount", float) = 0
+
+		_BorderThickness ("Border Thickness", float) = 0.1
+		_ObjectScaleX ("Object Scale X", float) = 1
+		_ObjectScaleY ("Object Scale Y", float) = 1
+
 	}
 	SubShader
 	{
@@ -44,6 +50,10 @@ Shader "Unlit/HealthBar"
 			float _MaxHealth;
 			float _ShowDamage;
 
+			float _BorderThickness;
+			float _ObjectScaleX;
+			float _ObjectScaleY;
+
 			v2f vert (appdata v)
 			{
 				v2f o;
@@ -69,6 +79,20 @@ Shader "Unlit/HealthBar"
 			
 			float4 frag (v2f i) : SV_Target
 			{
+				//Health Bar Mask (border)
+				float4 borderMask; 
+				float scaleCoeficient = _ObjectScaleY / _ObjectScaleX;
+
+				if (i.uv.x < _BorderThickness || i.uv.x > 1 - _BorderThickness || i.uv.y < _BorderThickness * scaleCoeficient || i.uv.y > 1 - _BorderThickness * scaleCoeficient)
+				{
+					borderMask = float4(0,0,0,1);
+				}
+				else
+				{
+					borderMask = float4(1,1,1,1);
+				}
+
+				//Health Bar Fill and Damage
 				float relativeHealth = _Health / _MaxHealth;
 				float relativeDamage = _ShowDamage / _MaxHealth;
 
@@ -94,8 +118,8 @@ Shader "Unlit/HealthBar"
 				output += dmgOutput;
 				output += bgOutput;
 
-				
-				return output;
+				//return borderMask;
+				return output
 			}
 			ENDCG
 		}

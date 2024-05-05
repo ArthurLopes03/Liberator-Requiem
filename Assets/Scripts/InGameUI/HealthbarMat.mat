@@ -65,6 +65,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BorderThickness: 0.02
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -76,6 +77,8 @@ Material:
     - _MaxHealth: 20
     - _Metallic: 0
     - _Mode: 0
+    - _ObjectScaleX: 0.5652
+    - _ObjectScaleY: 5.52
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _ShowDamage: 5

@@ -23,6 +23,9 @@ public class healthManager : MonoBehaviour
         _incommingDamage = 0f;
 
         maxHealth = _unit.health;
+
+        _mat.SetFloat("_ObjectScaleX", gameObject.transform.localScale.x);
+        _mat.SetFloat("_ObjectScaleY", gameObject.transform.localScale.y);
     }
 
     // Update is called once per frame
