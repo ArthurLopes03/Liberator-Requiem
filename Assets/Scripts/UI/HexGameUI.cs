@@ -53,10 +53,13 @@ public class HexGameUI : MonoBehaviour {
 			UpdateCurrentCell();
 				if (currentCell)
 				{
-					if ( currentCell.Unit && currentCell.Unit.gameObject.tag == "PlayerOneUnit")
+					if ( currentCell.Unit && currentCell.Unit.gameObject.tag == "PlayerOneUnit" && (currentCell.Unit.canMove && currentCell.Unit.canAttack))
 						{ selectedUnit = currentCell.Unit; }
 					else 
-						{ Debug.Log("Cannot Select That"); }
+					{
+						Debug.Log("Cannot Select That"); 
+						selectedUnit = null;
+					}
 				}
 		}
         if (!playerOneTurn)
@@ -66,10 +69,13 @@ public class HexGameUI : MonoBehaviour {
             UpdateCurrentCell();
             if (currentCell)
             {
-	            if (currentCell && currentCell.Unit.gameObject.tag == "PlayerTwoUnit")
+	            if (currentCell && currentCell.Unit.gameObject.tag == "PlayerTwoUnit" && (currentCell.Unit.canMove || currentCell.Unit.canAttack))
 					{ selectedUnit = currentCell.Unit; }
 				else
-					{ Debug.Log("Cannot Select That"); }
+				{ 
+					Debug.Log("Cannot Select That");
+                    selectedUnit = null;
+                }
             }
         }
     }
