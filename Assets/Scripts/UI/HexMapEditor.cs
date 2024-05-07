@@ -22,7 +22,13 @@ public class HexMapEditor : MonoBehaviour {
 
 	bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
 
-	enum OptionalToggle {
+	public HexUnit hexUnitPrefab;
+
+    public Unit_SO[] unitTypes;
+
+    Unit_SO currentUnitType;
+
+    enum OptionalToggle {
 		Ignore, Yes, No
 	}
 
@@ -116,9 +122,11 @@ public class HexMapEditor : MonoBehaviour {
 	void Awake () {
 		terrainMaterial.DisableKeyword("GRID_ON");
 		SetEditMode(false);
-	}
 
-	void Update () {
+        currentUnitType = unitTypes[0];
+    }
+
+    void Update () {
 		if (!EventSystem.current.IsPointerOverGameObject()) {
 			if (Input.GetMouseButton(0)) {
 				HandleInput();
@@ -142,11 +150,16 @@ public class HexMapEditor : MonoBehaviour {
 			hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
 	}
 
-	void CreateUnit () {
+    public void SetUnitType(int index)
+    {
+        currentUnitType = unitTypes[index];
+    }
+
+    void CreateUnit () {
 		HexCell cell = GetCellUnderCursor();
 		if (cell && !cell.Unit) {
 			hexGrid.AddUnit(
-				Instantiate(HexUnit.unitPrefab), cell, Random.Range(0f, 360f)
+				Instantiate(hexUnitPrefab), cell, Random.Range(0f, 360f), currentUnitType
 			);
 		}
 	}

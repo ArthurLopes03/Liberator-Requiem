@@ -8,8 +8,6 @@ public class HexUnit : MonoBehaviour {
 
 	public string UnitDescription;
 
-	public static HexUnit unitPrefab;
-
 	public int range;
 
 	public int moveSpeed;
@@ -24,7 +22,23 @@ public class HexUnit : MonoBehaviour {
 
 	public int health;
 
-	public HexCell Location {
+	public changeAnimations changeAnimations;
+
+	//Changes the unit's stats to those of the SO
+    public void SetType(Unit_SO unitType)
+    {
+        health = unitType.unitStats.health;
+		range = unitType.unitStats.range;
+		moveSpeed = unitType.unitStats.moveSpeed;
+		attackPow = unitType.unitStats.attackPow;
+		defence = unitType.unitStats.defence;
+		HexUnitName = unitType.unitStats.HexUnitName;
+		UnitDescription = unitType.unitStats.UnitDescription;
+
+		changeAnimations.animatedTextures = unitType.unitStats.animatedTextures;
+    }
+
+    public HexCell Location {
 		get {
 			return location;
 		}
@@ -65,11 +79,14 @@ public class HexUnit : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
+	/*
 	public void Save (BinaryWriter writer) {
 		location.coordinates.Save(writer);
 		writer.Write(orientation);
 	}
+	*/
 
+	/*
 	public static void Load (BinaryReader reader, HexGrid grid) {
 		HexCoordinates coordinates = HexCoordinates.Load(reader);
 		float orientation = reader.ReadSingle();
@@ -77,6 +94,7 @@ public class HexUnit : MonoBehaviour {
 			Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
 		);
 	}
+	*/
 
 	public void Attack(HexUnit enemyUnit)
 	{
@@ -126,4 +144,6 @@ public class HexUnit : MonoBehaviour {
 
 		return statline;
 	}
+
+	
 }

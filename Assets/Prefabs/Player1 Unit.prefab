@@ -30,9 +30,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7475603992838067546}
-  - {fileID: 348112386439615568}
   - {fileID: 4173746415363472}
+  - {fileID: 8996635034078136917}
+  - {fileID: 2866798065856757671}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114701888605048992
@@ -47,15 +47,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bba114c5e84a0f8fb19ef55b2766a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HexUnitName: Infantry
-  UnitDescription: Basic infantry, weak but expendable.
-  range: 1
-  moveSpeed: 2
+  HexUnitName: 
+  UnitDescription: 
+  range: 0
+  moveSpeed: 0
   canMove: 1
   canAttack: 1
-  attackPow: 30
-  defence: 30
-  health: 20
+  attackPow: 0
+  defence: 0
+  health: 0
+  changeAnimations: {fileID: 8092056800455093828}
 --- !u!1 &1926056678881898
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +162,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &1823057871252304157
+--- !u!1001 &155396888100351506
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -176,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 8242948978128502870, guid: 69af13e4444fc6640aeb4a754052228d, type: 3}
       propertyPath: animatedTextures.Array.data[0]
       value: 
-      objectReference: {fileID: 2800000, guid: 0bd23327b631c204d92d455ed35f8721, type: 3}
+      objectReference: {fileID: 2800000, guid: e6095e8d0cec010458bef76f597f3809, type: 3}
     - target: {fileID: 9147482923134608455, guid: 69af13e4444fc6640aeb4a754052228d, type: 3}
       propertyPath: m_LocalScale.x
       value: 15
@@ -238,12 +239,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69af13e4444fc6640aeb4a754052228d, type: 3}
---- !u!4 &7475603992838067546 stripped
+--- !u!114 &8092056800455093828 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8242948978128502870, guid: 69af13e4444fc6640aeb4a754052228d, type: 3}
+  m_PrefabInstance: {fileID: 155396888100351506}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b9f1fed1be512458d52123a704129b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &8996635034078136917 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9147482923134608455, guid: 69af13e4444fc6640aeb4a754052228d, type: 3}
-  m_PrefabInstance: {fileID: 1823057871252304157}
+  m_PrefabInstance: {fileID: 155396888100351506}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3504146166149985051
+--- !u!1001 &1422413622619150572
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -300,8 +312,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04f3e3631d9f8b745a3c9dc0e51d105c, type: 3}
---- !u!4 &348112386439615568 stripped
+--- !u!4 &2866798065856757671 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3780072604993267531, guid: 04f3e3631d9f8b745a3c9dc0e51d105c, type: 3}
-  m_PrefabInstance: {fileID: 3504146166149985051}
+  m_PrefabInstance: {fileID: 1422413622619150572}
   m_PrefabAsset: {fileID: 0}

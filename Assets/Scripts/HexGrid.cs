@@ -46,11 +46,12 @@ public class HexGrid : MonoBehaviour {
 		CreateMap(cellCountX, cellCountZ);
 	}
 
-	public void AddUnit (HexUnit unit, HexCell location, float orientation) {
+	public void AddUnit (HexUnit unit, HexCell location, float orientation, Unit_SO unitType) {
 		units.Add(unit);
 		unit.transform.SetParent(transform, false);
 		unit.Location = location;
 		unit.Orientation = orientation;
+		unit.SetType(unitType);
 	}
 
 	public void RemoveUnit (HexUnit unit) {
@@ -208,11 +209,12 @@ public class HexGrid : MonoBehaviour {
 		for (int i = 0; i < cells.Length; i++) {
 			cells[i].Save(writer);
 		}
-
+		/*
 		writer.Write(units.Count);
 		for (int i = 0; i < units.Count; i++) {
 			units[i].Save(writer);
 		}
+		*/
 	}
 
 	public void Load (BinaryReader reader, int header) {
@@ -235,13 +237,14 @@ public class HexGrid : MonoBehaviour {
 		for (int i = 0; i < chunks.Length; i++) {
 			chunks[i].Refresh();
 		}
-
+		/*
 		if (header >= 2) {
 			int unitCount = reader.ReadInt32();
 			for (int i = 0; i < unitCount; i++) {
 				HexUnit.Load(reader, this);
 			}
 		}
+		*/
 	}
 
 	public void ClearPath () {

@@ -11,33 +11,20 @@ public class HexGameUI : MonoBehaviour {
 
 	public bool playerOneTurn = true;
 
-	public HexUnit[] unitPrefabs;
-
-	HexUnit currentUnit;
-
 	public string currentTurnTag = "Player 1 Turn";
 
 	public int turnCounter = 1;
 
-    private void Awake()
-    {
-        currentUnit = unitPrefabs[0];
-		HexUnit.unitPrefab = currentUnit;
-    }
 
-	public void SetUnitType(int index)
+    public void SetEditMode (bool toggle) 
 	{
-		currentUnit = unitPrefabs[index];
-        HexUnit.unitPrefab = currentUnit;
-    }
-
-    public void SetEditMode (bool toggle) {
 		enabled = !toggle;
 		grid.ShowUI(!toggle);
 		grid.ClearPath();
 	}
 
-	void Update () {
+	void Update () 
+	{
 		if (!EventSystem.current.IsPointerOverGameObject()) {
 			if (Input.GetMouseButtonDown(0)) {
 				DoSelection();
@@ -57,7 +44,8 @@ public class HexGameUI : MonoBehaviour {
 		}
 	}
 
-	void DoSelection () {
+	void DoSelection () 
+	{
 		if (playerOneTurn)
 		{
 			grid.ClearUnitHighlight();
@@ -86,7 +74,8 @@ public class HexGameUI : MonoBehaviour {
         }
     }
 
-	void DoPathfinding () {
+	void DoPathfinding () 
+	{
 		if (UpdateCurrentCell()) {
             if (currentCell && currentCell.hasUnit)
             {
@@ -111,7 +100,8 @@ public class HexGameUI : MonoBehaviour {
         }
     }
 
-	void DoMove () {
+	void DoMove () 
+	{
         if (grid.HasPath && grid.toTileTurn <= 0)
         {
             selectedUnit.Location = currentCell;
@@ -121,7 +111,8 @@ public class HexGameUI : MonoBehaviour {
         }
 	}
 
-	bool UpdateCurrentCell () {
+	bool UpdateCurrentCell () 
+	{
 		HexCell cell =
 			grid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
 		if (cell != currentCell) {
