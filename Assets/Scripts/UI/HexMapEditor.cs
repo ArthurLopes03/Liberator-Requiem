@@ -177,13 +177,13 @@ public class HexMapEditor : MonoBehaviour {
 		HexCell cell = GetCellUnderCursor();
 		if (cell && !cell.Unit && playerUnitSelector == 1) {
 			hexGrid.AddUnit(
-				Instantiate(hexUnitPrefabP1), cell, Random.Range(0f, 360f), currentUnitType
+				Instantiate(hexUnitPrefabP1), cell, Random.Range(0f, 360f), currentUnitType, playerUnitSelector
 			);
 		}
         else if (cell && !cell.Unit && playerUnitSelector == 2)
         {
             hexGrid.AddUnit(
-                Instantiate(hexUnitPrefabP2), cell, Random.Range(0f, 360f), currentUnitType
+                Instantiate(hexUnitPrefabP2), cell, Random.Range(0f, 360f), currentUnitType, playerUnitSelector
             );
         }
     }

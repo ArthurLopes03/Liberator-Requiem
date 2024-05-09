@@ -145,5 +145,8 @@ public class HexUnit : MonoBehaviour {
 		return statline;
 	}
 
-	
+	public void ChangeAnimation(int anim)
+	{
+		changeAnimations.currentAnimation = anim;
+	}
 }

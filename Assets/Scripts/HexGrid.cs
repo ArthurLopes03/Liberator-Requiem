@@ -52,12 +52,14 @@ public class HexGrid : MonoBehaviour {
 		player2VictoryPoints = new List<HexCell>();
 	}
 
-	public void AddUnit (HexUnit unit, HexCell location, float orientation, Unit_SO unitType) {
+	public void AddUnit (HexUnit unit, HexCell location, float orientation, Unit_SO unitType, int player) {
+		Debug.Log(player - 1);
 		units.Add(unit);
 		unit.transform.SetParent(transform, false);
 		unit.Location = location;
 		unit.Orientation = orientation;
 		unit.SetType(unitType);
+		unit.ChangeAnimation(player);
 	}
 
 	public void RemoveUnit (HexUnit unit) {
