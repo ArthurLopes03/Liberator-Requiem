@@ -56,7 +56,14 @@ MonoBehaviour:
   attackPow: 0
   defence: 0
   health: 0
+  player: 0
+  unitId: 0
   changeAnimations: {fileID: 8092056800455093828}
+  unitTypes:
+  - {fileID: 11400000, guid: a55d97a30e615a044a501e9000b92754, type: 2}
+  - {fileID: 11400000, guid: 6a312618d58359e4b9b569619c2b3a3d, type: 2}
+  - {fileID: 11400000, guid: 8562c5fa4dad72e4086787dfd7add8cb, type: 2}
+  - {fileID: 11400000, guid: 5a38a0e118079a74ea0df304794aa7a4, type: 2}
 --- !u!1 &1926056678881898
 GameObject:
   m_ObjectHideFlags: 0

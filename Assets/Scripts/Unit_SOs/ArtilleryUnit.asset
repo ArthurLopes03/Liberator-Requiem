@@ -24,3 +24,4 @@ MonoBehaviour:
     animatedTextures:
     - {fileID: 2800000, guid: 5d653cacceceb3b4db1b84a25a5a5534, type: 3}
     - {fileID: 2800000, guid: 986426608bce2bb4c8903092662a73a6, type: 3}
+    UnitID: 3

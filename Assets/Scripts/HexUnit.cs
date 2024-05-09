@@ -23,9 +23,18 @@ public class HexUnit : MonoBehaviour {
 
 	public int health;
 
-	private int Player;
+	public int player;
+
+	public int unitId;
 
 	public changeAnimations changeAnimations;
+
+	public Unit_SO[] unitTypes;
+
+	public void SetPlayer(int player)
+	{
+		this.player = player;
+	}
 
 	//Changes the unit's stats to those of the SO
     public void SetType(Unit_SO unitType)
@@ -37,17 +46,18 @@ public class HexUnit : MonoBehaviour {
 		defence = unitType.unitStats.defence;
 		HexUnitName = unitType.unitStats.HexUnitName;
 		UnitDescription = unitType.unitStats.UnitDescription;
+		unitId = unitType.unitStats.UnitID;
 
 		changeAnimations.animatedTextures = unitType.unitStats.animatedTextures;
 
 		if(GetComponent<Transform>().tag == "PlayerOneUnit")
 		{
-			Player = 0;
+			player = 0;
 		}
 
         if (GetComponent<Transform>().tag == "PlayerTwoUnit")
         {
-            Player = 1;
+            player = 1;
         }
     }
 
@@ -63,15 +73,15 @@ public class HexUnit : MonoBehaviour {
 			value.Unit = this;
 			transform.localPosition = value.Position;
 
-			if(location.VictoryPoint && location.VictoryPointHolder != Player)
+			if(location.VictoryPoint && location.VictoryPointHolder != player)
 			{
-				location.VictoryPointHolder = Player;
+				location.VictoryPointHolder = player;
 				location.Refresh();
 
 				HexGrid grid;
 				if(grid = GetComponentInParent<HexGrid>())
 				{
-					switch(Player)
+					switch(player)
 					{
 						case 0:
 							grid.player2VictoryPoints.Remove(location);
@@ -114,22 +124,40 @@ public class HexUnit : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	/*
+	
 	public void Save (BinaryWriter writer) {
 		location.coordinates.Save(writer);
 		writer.Write(orientation);
-	}
-	*/
 
-	/*
+		writer.Write((byte)unitId);
+
+		writer.Write((byte)player);
+	}
+	
+
+	
 	public static void Load (BinaryReader reader, HexGrid grid) {
 		HexCoordinates coordinates = HexCoordinates.Load(reader);
 		float orientation = reader.ReadSingle();
-		grid.AddUnit(
-			Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
-		);
-	}
-	*/
+        int unitId = reader.ReadByte();
+
+		int player = reader.ReadByte();
+
+		if (player == 0)
+		{
+			grid.AddUnit(
+				Instantiate(grid.hexUnitPrefabP1), grid.GetCell(coordinates), orientation, unitId
+			);
+		}
+        if (player == 1)
+        {
+            grid.AddUnit(
+                Instantiate(grid.hexUnitPrefabP2), grid.GetCell(coordinates), orientation, unitId
+            );
+        }
+    }
+	
+
 	public bool IsInRange (HexUnit enemyUnit)
     {
         if (Location.coordinates.DistanceTo(enemyUnit.Location.coordinates) <= range)
