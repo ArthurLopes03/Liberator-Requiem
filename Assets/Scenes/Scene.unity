@@ -14066,13 +14066,14 @@ MonoBehaviour:
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 3}
   chunkPrefab: {fileID: 114000010052569294, guid: 7622d007cafd044a1b1189c0b93d2912, type: 3}
-  hexUnitPrefabP1: {fileID: 0}
-  hexUnitPrefabP2: {fileID: 0}
+  hexUnitPrefabP1: {fileID: 114701888605048992, guid: 807a85d1ea29f1a46b53f5c29c83d6f4, type: 3}
+  hexUnitPrefabP2: {fileID: 114701888605048992, guid: d0e1733c387d2f44cb6bec440314288e, type: 3}
   player1VictoryPoints: []
   player2VictoryPoints: []
   noiseSource: {fileID: 2800000, guid: 38701cdeb1fb9427cbb585f917aa59cb, type: 3}
   seed: 1234
   toTileTurn: 0
+  units: []
 --- !u!4 &1571186512
 Transform:
   m_ObjectHideFlags: 0
@@ -19661,11 +19662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexGrid: {fileID: 1571186511}
   terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}
-  unitTypes:
-  - {fileID: 11400000, guid: a55d97a30e615a044a501e9000b92754, type: 2}
-  - {fileID: 11400000, guid: 6a312618d58359e4b9b569619c2b3a3d, type: 2}
-  - {fileID: 11400000, guid: 8562c5fa4dad72e4086787dfd7add8cb, type: 2}
-  - {fileID: 11400000, guid: 5a38a0e118079a74ea0df304794aa7a4, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
