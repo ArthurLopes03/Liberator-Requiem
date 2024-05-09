@@ -56,10 +56,9 @@ public class changeAnimations : MonoBehaviour
             _currentMaterial.SetTexture("_MainTex", animatedTextures[currentAnimation % numberOfTextures]);
         }
     }
-
     void fixPlayerSprites()
     {
-        if (GetComponentInParent<Transform>().tag == "PlayerTwoUnit")
+        if (GetComponentInParent<HexUnit>().tag == "PlayerTwoUnit")
         {
             currentAnimation = 1;
         }

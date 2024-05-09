@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0caab29f8e58e834e84f832254b43902, type: 3}
-  m_Name: MechUnit
+  m_Name: ArtilleryUnit
   m_EditorClassIdentifier: 
   unitStats:
-    HexUnitName: Mechatronic Tank
-    UnitDescription: Strong, fast and deadly. This one is our trump card. Do not
-      let it die.
-    range: 2
-    moveSpeed: 8
-    attackPow: 70
-    defence: 45
-    health: 100
+    HexUnitName: Artillery
+    UnitDescription: Fragile, but reaches far. Make sure to place them right, they
+      dont really move.
+    range: 10
+    moveSpeed: 2
+    attackPow: 40
+    defence: 25
+    health: 40
     animatedTextures:
-    - {fileID: 2800000, guid: e6095e8d0cec010458bef76f597f3809, type: 3}
-    - {fileID: 2800000, guid: a13417f7e8ed6ec4fa66346a4155ceb7, type: 3}
+    - {fileID: 2800000, guid: 5d653cacceceb3b4db1b84a25a5a5534, type: 3}
+    - {fileID: 2800000, guid: 986426608bce2bb4c8903092662a73a6, type: 3}
+    UnitID: 2

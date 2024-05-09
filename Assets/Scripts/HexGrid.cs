@@ -13,9 +13,9 @@ public class HexGrid : MonoBehaviour {
 	public HexCell cellPrefab;
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
-	public HexUnit unitPrefab;
+    public HexUnit hexUnitPrefabP1, hexUnitPrefabP2;
 
-	public List<HexCell> player1VictoryPoints;
+    public List<HexCell> player1VictoryPoints;
     public List<HexCell> player2VictoryPoints;
 
     public Texture2D noiseSource;
@@ -42,6 +42,7 @@ public class HexGrid : MonoBehaviour {
 	HexCell currentPathFrom, currentPathTo;
 	bool currentPathExists;
 
+	[SerializeField]
 	List<HexUnit> units = new List<HexUnit>();
 
 	void Awake () {
@@ -52,12 +53,12 @@ public class HexGrid : MonoBehaviour {
 		player2VictoryPoints = new List<HexCell>();
 	}
 
-	public void AddUnit (HexUnit unit, HexCell location, float orientation, Unit_SO unitType) {
+	public void AddUnit (HexUnit unit, HexCell location, float orientation, int unitType) {
 		units.Add(unit);
 		unit.transform.SetParent(transform, false);
 		unit.Location = location;
 		unit.Orientation = orientation;
-		unit.SetType(unitType);
+		unit.SetType(unit.unitTypes[unitType]);
 	}
 
 	public void RemoveUnit (HexUnit unit) {
@@ -215,12 +216,10 @@ public class HexGrid : MonoBehaviour {
 		for (int i = 0; i < cells.Length; i++) {
 			cells[i].Save(writer);
 		}
-		/*
 		writer.Write(units.Count);
 		for (int i = 0; i < units.Count; i++) {
 			units[i].Save(writer);
 		}
-		*/
 	}
 
 	public void Load (BinaryReader reader, int header) {
@@ -243,14 +242,12 @@ public class HexGrid : MonoBehaviour {
 		for (int i = 0; i < chunks.Length; i++) {
 			chunks[i].Refresh();
 		}
-		/*
 		if (header >= 2) {
 			int unitCount = reader.ReadInt32();
 			for (int i = 0; i < unitCount; i++) {
 				HexUnit.Load(reader, this);
 			}
 		}
-		*/
 	}
 
 	public void ClearPath () {

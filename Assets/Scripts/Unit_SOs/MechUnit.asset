@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0caab29f8e58e834e84f832254b43902, type: 3}
-  m_Name: FootUnit
+  m_Name: MechUnit
   m_EditorClassIdentifier: 
   unitStats:
-    HexUnitName: Infantry
-    UnitDescription: Not great at much, cannon fother but brave and commited to the
-      cause.
-    range: 4
-    moveSpeed: 5
-    attackPow: 30
-    defence: 10
-    health: 35
+    HexUnitName: Mechatronic Tank
+    UnitDescription: Strong, fast and deadly. This one is our trump card. Do not
+      let it die.
+    range: 2
+    moveSpeed: 8
+    attackPow: 70
+    defence: 45
+    health: 100
     animatedTextures:
-    - {fileID: 2800000, guid: 0bd23327b631c204d92d455ed35f8721, type: 3}
-    - {fileID: 2800000, guid: c18e94d86838a66489a44084dbdd002f, type: 3}
+    - {fileID: 2800000, guid: e6095e8d0cec010458bef76f597f3809, type: 3}
+    - {fileID: 2800000, guid: a13417f7e8ed6ec4fa66346a4155ceb7, type: 3}
+    UnitID: 1

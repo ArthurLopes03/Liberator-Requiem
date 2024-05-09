@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.Linq;
 
 public class HexGameUI : MonoBehaviour {
 
@@ -17,6 +18,7 @@ public class HexGameUI : MonoBehaviour {
 	public int turnCounter = 1;
 
 	private GameObject[] playerTwoUnits;
+	private GameObject[] playerOneUnits;
 
     public void SetEditMode (bool toggle) 
 	{
@@ -63,22 +65,6 @@ public class HexGameUI : MonoBehaviour {
 					}
 				}
 		}
-        if (!playerOneTurn)
-        {
-            grid.ClearUnitHighlight();
-            grid.ClearPath();
-            UpdateCurrentCell();
-            if (currentCell)
-            {
-	            if (currentCell && currentCell.Unit.gameObject.tag == "PlayerTwoUnit" && (currentCell.Unit.canMove || currentCell.Unit.canAttack))
-					{ selectedUnit = currentCell.Unit; }
-				else
-				{ 
-					Debug.Log("Cannot Select That");
-                    selectedUnit = null;
-                }
-            }
-        }
     }
 
 	void DoPathfinding () 
@@ -101,7 +87,7 @@ public class HexGameUI : MonoBehaviour {
 
 	void DoAttack()
 	{
-		if(selectedUnit.canAttack && selectedUnit.Location.coordinates.DistanceTo(currentCell.coordinates) <= selectedUnit.range)
+		if(selectedUnit.canAttack && selectedUnit.IsInRange(currentCell.Unit))
 		{
             selectedUnit.Attack(currentCell.Unit);
         }
@@ -129,6 +115,7 @@ public class HexGameUI : MonoBehaviour {
 		return false;
 	}
 
+	// Processes the turn
 	public void NextTurn()
     {
 		grid.ClearPath();
@@ -137,7 +124,7 @@ public class HexGameUI : MonoBehaviour {
 		selectedUnit = null;
 		currentCell = null;
 
-        GameObject[] playerOneUnits = GameObject.FindGameObjectsWithTag("PlayerOneUnit");
+        playerOneUnits = GameObject.FindGameObjectsWithTag("PlayerOneUnit");
         playerTwoUnits = GameObject.FindGameObjectsWithTag("PlayerTwoUnit");
 
 
@@ -155,7 +142,7 @@ public class HexGameUI : MonoBehaviour {
             DoAITurn();
 		}
 		else if (!playerOneTurn)
-		{ 
+		{
 			playerOneTurn = true;
 			currentTurnTag = "Player 1 Turn";
 			turnCounter++;
@@ -166,7 +153,17 @@ public class HexGameUI : MonoBehaviour {
                 u.GetComponent<HexUnit>().canMove = true;
             }
         }
-	}
+
+		if(grid.player1VictoryPoints.Count == 0) 
+		{
+			//Win Condition P1
+		}
+
+        if (grid.player2VictoryPoints.Count == 0)
+        {
+			//Win Condition P2
+        }
+    }
 
 	// Processes the AI's turn
 	public void DoAITurn()
@@ -180,30 +177,41 @@ public class HexGameUI : MonoBehaviour {
 
             List<HexCell> possibleMoves = null;
 
-
+			// MOVEMENT PHASE
+			// First, finds every possible move
             if (closestVictoryPoint != null)
 			{
                 possibleMoves = grid.AISearch(unit.Location, closestVictoryPoint, unit.moveSpeed * 10);
 				Debug.Log("Possible moves = " +  possibleMoves.Count);
             }
 
+			// If there is a possible move, it will find the best one
 			if( possibleMoves != null && possibleMoves.Count > 0)
 			{
                 HexCell moveTarget = FindBestMove(possibleMoves, closestVictoryPoint, unit);
 
-				Debug.Log("Moving Target");
+				// Moves to target
                 unit.Location = moveTarget;
             }
+
+			//ATTACK PHASE
+			// Find the best target
+			HexUnit target = FindBestTarget(unit);
+
+			// If there is a target, attack
+			if (target != null)
+			{
+				unit.Attack(target);
+				unit.canAttack = false;
+			}
 		}
 
 		NextTurn();
 	}
 
-	[SerializeField]
-	HexCell best;
 	private HexCell FindBestMove(List<HexCell> cells, HexCell target, HexUnit unit)
 	{
-		best = null;
+		HexCell best = null;
 		int bestValue = int.MinValue;
 		foreach(HexCell cell in cells)
 		{
@@ -266,5 +274,33 @@ public class HexGameUI : MonoBehaviour {
 		}
 
 		return closestVictoryPoint;
+	}
+
+	private HexUnit FindBestTarget(HexUnit unit)
+	{
+		List<HexUnit> possibleTargets = new List<HexUnit>();
+
+		if (playerOneUnits == null || playerOneUnits.Count() <= 0)
+		{
+			return null;
+		}
+
+		// Goes through each Player 1 unit to see if it's in range
+		foreach(GameObject u in playerOneUnits)
+		{
+			HexUnit p1Unit = u.GetComponent<HexUnit>();
+
+			if( unit.IsInRange(p1Unit) )
+			{
+				possibleTargets.Add(p1Unit);
+			}
+		}
+
+		if( possibleTargets != null && possibleTargets.Count > 0 )
+		{
+			return possibleTargets[0];
+		}
+
+		return null;
 	}
 }

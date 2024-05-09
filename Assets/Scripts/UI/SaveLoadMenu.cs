@@ -101,6 +101,8 @@ public class SaveLoadMenu : MonoBehaviour {
 	}
 
 	void Load (string path) {
+		Debug.Log(path);
+
 		if (!File.Exists(path)) {
 			Debug.LogError("File does not exist " + path);
 			return;

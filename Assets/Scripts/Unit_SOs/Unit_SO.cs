@@ -21,6 +21,8 @@ public struct unitStats
     public int health;
 
     public Texture[] animatedTextures;
+
+    public int UnitID;
 }
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/InfantryUnit_SO", order = 1)]
