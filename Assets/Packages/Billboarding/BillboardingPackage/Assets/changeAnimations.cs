@@ -41,6 +41,8 @@ public class changeAnimations : MonoBehaviour
 
         //force the current texture to be the first one
         currentAnimation = 0;
+        
+        fixPlayerSprites();
     }
     void Update()
     {
@@ -52,6 +54,14 @@ public class changeAnimations : MonoBehaviour
             
             //modulus the current animation int when loading a texture just to make sure it won't give an out of bounds error 
             _currentMaterial.SetTexture("_MainTex", animatedTextures[currentAnimation % numberOfTextures]);
+        }
+    }
+
+    void fixPlayerSprites()
+    {
+        if (GetComponentInParent<Transform>().tag == "PlayerTwoUnit")
+        {
+            currentAnimation = 1;
         }
     }
 }

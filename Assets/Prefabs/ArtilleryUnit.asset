@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0caab29f8e58e834e84f832254b43902, type: 3}
+  m_Name: ArtilleryUnit
+  m_EditorClassIdentifier: 
+  unitStats:
+    HexUnitName: Artillery
+    UnitDescription: Fragile, but reaches far. Make sure to place them right, they
+      dont really move.
+    range: 10
+    moveSpeed: 2
+    attackPow: 40
+    defence: 25
+    health: 40
+    animatedTextures:
+    - {fileID: 2800000, guid: 5d653cacceceb3b4db1b84a25a5a5534, type: 3}
+    - {fileID: 2800000, guid: 986426608bce2bb4c8903092662a73a6, type: 3}

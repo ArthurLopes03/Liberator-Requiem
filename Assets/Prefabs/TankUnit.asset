@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0caab29f8e58e834e84f832254b43902, type: 3}
+  m_Name: TankUnit
+  m_EditorClassIdentifier: 
+  unitStats:
+    HexUnitName: Tank
+    UnitDescription: Can take a beating and can give one as well, good against mechs
+      make sure not to waste them.
+    range: 3
+    moveSpeed: 4
+    attackPow: 50
+    defence: 40
+    health: 80
+    animatedTextures:
+    - {fileID: 2800000, guid: 71c09b26a2abf964081ae5317be32171, type: 3}
+    - {fileID: 2800000, guid: c9453fbce35678048b4d5e4056fc2bc6, type: 3}
