@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MenuScene.unity
+    path: Assets/Scenes/MenuScene.unity
     guid: 3fba58dde1e760b44a717937993ce2a4
   - enabled: 1
-    path: Assets/Tutorial.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: 8f2c1ee20562db94484ac07189db269c
   - enabled: 1
-    path: Assets/Scene.unity
+    path: Assets/Scenes/Map Maker.unity
     guid: 97bc9753c78424d1e8b9a5f86a27ae68
   - enabled: 1
-    path: Assets/FailScreen.unity
+    path: Assets/Scenes/WinScreen.unity
     guid: 83496fb1d1614184b9477ffa57f41499
+  - enabled: 1
+    path: Assets/Scenes/FailScreen.unity
+    guid: 88cf41dde3a51a34c9e59b369cc83b0d
   m_configObjects: {}

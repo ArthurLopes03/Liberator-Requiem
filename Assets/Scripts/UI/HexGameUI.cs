@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class HexGameUI : MonoBehaviour {
 
@@ -156,12 +157,12 @@ public class HexGameUI : MonoBehaviour {
 
 		if(grid.player1VictoryPoints.Count == 0) 
 		{
-			//Win Condition P1
+			LoseGame();
 		}
 
         if (grid.player2VictoryPoints.Count == 0)
         {
-			//Win Condition P2
+			WinGame();
         }
     }
 
@@ -302,5 +303,15 @@ public class HexGameUI : MonoBehaviour {
 		}
 
 		return null;
+	}
+
+	void WinGame()
+	{
+		SceneManager.LoadScene("WinScreen");
+	}
+
+	void LoseGame()
+	{
+		SceneManager.LoadScene("LoseScreen");
 	}
 }
