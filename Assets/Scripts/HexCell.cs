@@ -218,6 +218,36 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	public bool VictoryPoint {
+		get
+		{
+			return victoryPoint;
+		}
+		set
+		{
+			if (victoryPoint != value) {  
+				victoryPoint = value;
+				RefreshSelfOnly();
+			}
+		}
+	}
+
+	public int VictoryPointHolder
+	{
+		get
+		{
+			return victoryPointHolder;
+		}
+		set
+		{
+			if (victoryPointHolder != value)
+			{
+				victoryPointHolder = value;
+				Refresh();
+			}
+		}
+	}
+
 	public int TerrainTypeIndex {
 		get {
 			return terrainTypeIndex;
@@ -267,6 +297,10 @@ public class HexCell : MonoBehaviour {
 	int distance;
 
 	bool walled;
+
+	bool victoryPoint;
+
+	int victoryPointHolder;
 
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;

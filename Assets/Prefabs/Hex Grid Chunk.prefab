@@ -79,6 +79,9 @@ MonoBehaviour:
   - {fileID: 4000013750885840, guid: f2967fed6444e43559e32916c2465d27, type: 3}
   - {fileID: 4000011263270592, guid: cb7be9a74fd6e4cbdb5be2ac7319e699, type: 3}
   - {fileID: 4000012893891830, guid: cc90e6fbc542a40c080d2c64da7d26ed, type: 3}
+  victoryPoint:
+  - {fileID: 4025267462679679187, guid: 24a063cb8c85f2b4da7939dd8b366d84, type: 3}
+  - {fileID: 7453830192684121694, guid: 9b98b88cd5c6de54282a6558ae0b13ba, type: 3}
 --- !u!1 &1000010636493760
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +164,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 10
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!1 &1000010764466194
 GameObject:
   m_ObjectHideFlags: 0

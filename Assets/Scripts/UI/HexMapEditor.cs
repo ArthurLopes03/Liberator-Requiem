@@ -20,7 +20,9 @@ public class HexMapEditor : MonoBehaviour {
 	bool applyElevation = true;
 	bool applyWaterLevel = true;
 
-	bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex;
+	bool applyUrbanLevel, applyFarmLevel, applyPlantLevel, applySpecialIndex, applyVictoryPoint;
+
+	int victoryPointHolder;
 
 	public HexUnit hexUnitPrefab;
 
@@ -104,6 +106,15 @@ public class HexMapEditor : MonoBehaviour {
 
 	public void SetWalledMode (int mode) {
 		walledMode = (OptionalToggle)mode;
+	}
+
+	public void SetApplyVictoryPoint (bool toggle) {
+		applyVictoryPoint = toggle;
+	}
+
+	public void SetVictoryPointHolder (float holder) {
+		Debug.Log(holder);
+		victoryPointHolder = (int)holder;
 	}
 
 	public void SetEditMode (bool toggle) {
@@ -240,6 +251,13 @@ public class HexMapEditor : MonoBehaviour {
 			}
 			if (applyPlantLevel) {
 				cell.PlantLevel = activePlantLevel;
+			}
+			if (applyVictoryPoint) {
+				cell.VictoryPoint = applyVictoryPoint;
+				cell.VictoryPointHolder = victoryPointHolder;
+			}
+			if (!applyVictoryPoint) {
+				cell.VictoryPoint = applyVictoryPoint;
 			}
 			if (riverMode == OptionalToggle.No) {
 				cell.RemoveRiver();

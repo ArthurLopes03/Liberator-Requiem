@@ -72,6 +72,10 @@ public class HexGridChunk : MonoBehaviour {
 			if (cell.IsSpecial) {
 				features.AddSpecialFeature(cell, cell.Position);
 			}
+			if(cell.VictoryPoint)
+			{
+				features.AddVictoryPoint(cell, cell.Position, cell.VictoryPointHolder);
+			}
 		}
 	}
 

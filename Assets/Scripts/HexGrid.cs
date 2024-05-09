@@ -352,40 +352,49 @@ public class HexGrid : MonoBehaviour {
 
 			int currentTurn = current.Distance / speed;
 
+			// Iterates through each neighbor of the cell
 			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
 				HexCell neighbor = current.GetNeighbor(d);
+				// Determines if you can move that direction, and the potential move cost
 				if (
+					// Does this tile exist? And has it been searched yet
 					neighbor == null ||
 					neighbor.SearchPhase > searchFrontierPhase
 				) {
 					continue;
 				}
 				if (neighbor.IsUnderwater || neighbor.Unit) {
+					// Is this tile underwater?
 					continue;
 				}
 				HexEdgeType edgeType = current.GetEdgeType(neighbor);
 				if (edgeType == HexEdgeType.Cliff) {
+					// Is this tile too high up
 					continue;
 				}
 				int moveCost;
 				if (current.HasRoadThroughEdge(d)) {
+					// Roads have a movement cost of 1
 					moveCost = 1;
 				}
 				else if (current.Walled != neighbor.Walled) {
+					// Cannot pass through walls
 					continue;
 				}
 				else {
+					// If the edge type is flat, the cost is 5. Otherwise it is 10
 					moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
 					moveCost += neighbor.UrbanLevel + neighbor.FarmLevel +
 						neighbor.PlantLevel;
 				}
+
 
 				int distance = current.Distance + moveCost;
 				int turn = distance / speed;
 				if (turn > currentTurn) {
 					distance = turn * speed + moveCost;
 				}
-
+				Debug.Log(turn);
 				if (neighbor.SearchPhase < searchFrontierPhase) {
 					neighbor.SearchPhase = searchFrontierPhase;
 					neighbor.Distance = distance;

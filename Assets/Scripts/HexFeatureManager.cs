@@ -11,6 +11,8 @@ public class HexFeatureManager : MonoBehaviour {
 
 	public Transform[] special;
 
+	public Transform[] victoryPoint;
+
 	Transform container;
 
 	public void Clear () {
@@ -107,7 +109,17 @@ public class HexFeatureManager : MonoBehaviour {
 		instance.SetParent(container, false);
 	}
 
-	public void AddWall (
+    public void AddVictoryPoint(HexCell cell, Vector3 position, int playerHolder)
+    {
+		Debug.Log("Adding Victory Point " + playerHolder);
+        HexHash hash = HexMetrics.SampleHashGrid(position);
+        Transform instance = Instantiate(victoryPoint[playerHolder]);
+        instance.localPosition = HexMetrics.Perturb(position);
+        instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+        instance.SetParent(container, false);
+    }
+
+    public void AddWall (
 		EdgeVertices near, HexCell nearCell,
 		EdgeVertices far, HexCell farCell,
 		bool hasRiver, bool hasRoad
