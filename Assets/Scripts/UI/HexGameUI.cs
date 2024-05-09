@@ -6,7 +6,7 @@ public class HexGameUI : MonoBehaviour {
 
 	public HexGrid grid;
 
-	HexCell currentCell;
+	public HexCell currentCell;
 
 	public HexUnit selectedUnit;
 
