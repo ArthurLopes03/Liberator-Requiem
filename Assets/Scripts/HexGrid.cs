@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using static UnityEditor.FilePathAttribute;
+using Unity.VisualScripting;
 
 public class HexGrid : MonoBehaviour {
 
@@ -14,7 +15,10 @@ public class HexGrid : MonoBehaviour {
 	public HexGridChunk chunkPrefab;
 	public HexUnit unitPrefab;
 
-	public Texture2D noiseSource;
+	public List<HexCell> player1VictoryPoints;
+    public List<HexCell> player2VictoryPoints;
+
+    public Texture2D noiseSource;
 
 	public int seed;
 
@@ -44,6 +48,8 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
 		CreateMap(cellCountX, cellCountZ);
+		player1VictoryPoints = new List<HexCell>();
+		player2VictoryPoints = new List<HexCell>();
 	}
 
 	public void AddUnit (HexUnit unit, HexCell location, float orientation, Unit_SO unitType) {
@@ -391,10 +397,9 @@ public class HexGrid : MonoBehaviour {
 
 				int distance = current.Distance + moveCost;
 				int turn = distance / speed;
-				if (turn > currentTurn) {
+                if (turn > currentTurn) {
 					distance = turn * speed + moveCost;
 				}
-				Debug.Log(turn);
 				if (neighbor.SearchPhase < searchFrontierPhase) {
 					neighbor.SearchPhase = searchFrontierPhase;
 					neighbor.Distance = distance;
@@ -413,4 +418,121 @@ public class HexGrid : MonoBehaviour {
 		}
 		return false;
 	}
+
+    public List<HexCell> AISearch(HexCell fromCell, HexCell toCell, int speed)
+	{
+
+        List<HexCell> possibleMoves = new List<HexCell> { };
+        searchFrontierPhase += 2;
+        if (searchFrontier == null)
+        {
+            searchFrontier = new HexCellPriorityQueue();
+        }
+        else
+        {
+            searchFrontier.Clear();
+        }
+
+        fromCell.SearchPhase = searchFrontierPhase;
+        fromCell.Distance = 0;
+        searchFrontier.Enqueue(fromCell);
+        while (searchFrontier.Count > 0)
+        {
+            HexCell current = searchFrontier.Dequeue();
+            current.SearchPhase += 1;
+
+            /*if (current == toCell)
+            {
+                return possibleMoves;
+            } */
+
+            int currentTurn = current.Distance / speed;
+
+            // Iterates through each neighbor of the cell
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+            {
+                HexCell neighbor = current.GetNeighbor(d);
+                // Determines if you can move that direction, and the potential move cost
+                if (
+                    // Does this tile exist? And has it been searched yet
+                    neighbor == null ||
+                    neighbor.SearchPhase > searchFrontierPhase
+                )
+                {
+                    continue;
+                }
+                if (neighbor.IsUnderwater || neighbor.hasUnit)
+                {
+                    // Is this tile underwater? Is it already occupied?
+					if(!neighbor.VictoryPoint)
+						continue;
+                }
+                HexEdgeType edgeType = current.GetEdgeType(neighbor);
+                if (edgeType == HexEdgeType.Cliff)
+                {
+                    // Is this tile too high up
+                    continue;
+                }
+                int moveCost;
+                if (current.HasRoadThroughEdge(d))
+                {
+                    // Roads have a movement cost of 1
+                    moveCost = 1;
+                }
+                else if (current.Walled != neighbor.Walled)
+                {
+                    // Cannot pass through walls
+                    continue;
+                }
+                else
+                {
+                    // If the edge type is flat, the cost is 5. Otherwise it is 10
+                    moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
+                    moveCost += neighbor.UrbanLevel + neighbor.FarmLevel +
+                        neighbor.PlantLevel;
+                }
+
+
+                int distance = current.Distance + moveCost;
+                int turn = distance / speed;
+                // If it is in move range, it is a possible move
+                if (turn == 0 && !current.hasUnit)
+				{
+					possibleMoves.Add(current);
+                }
+
+                if (current == toCell)
+                {
+                    if (turn == 0 && !current.hasUnit)
+                    {
+                        possibleMoves.Add(current);
+                    }
+                    return possibleMoves;
+                }
+
+                if (turn > currentTurn)
+                {
+                    distance = turn * speed + moveCost;
+                }
+                if (neighbor.SearchPhase < searchFrontierPhase)
+                {
+                    neighbor.SearchPhase = searchFrontierPhase;
+                    neighbor.Distance = distance;
+                    neighbor.PathFrom = current;
+                    neighbor.SearchHeuristic =
+                        neighbor.coordinates.DistanceTo(toCell.coordinates);
+                    searchFrontier.Enqueue(neighbor);
+                }
+                else if (distance < neighbor.Distance)
+                {
+                    int oldPriority = neighbor.SearchPriority;
+                    neighbor.Distance = distance;
+                    neighbor.PathFrom = current;
+                    searchFrontier.Change(neighbor, oldPriority);
+                }
+            }
+        }
+		Debug.Log("No possible moves");
+        return null;
+    }
 }

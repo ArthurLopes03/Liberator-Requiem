@@ -111,7 +111,6 @@ public class HexFeatureManager : MonoBehaviour {
 
     public void AddVictoryPoint(HexCell cell, Vector3 position, int playerHolder)
     {
-		Debug.Log("Adding Victory Point " + playerHolder);
         HexHash hash = HexMetrics.SampleHashGrid(position);
         Transform instance = Instantiate(victoryPoint[playerHolder]);
         instance.localPosition = HexMetrics.Perturb(position);

@@ -24,7 +24,9 @@ public class HexMapEditor : MonoBehaviour {
 
 	int victoryPointHolder;
 
-	public HexUnit hexUnitPrefab;
+	public HexUnit hexUnitPrefabP1, hexUnitPrefabP2;
+
+	int playerUnitSelector;
 
     public Unit_SO[] unitTypes;
 
@@ -121,6 +123,11 @@ public class HexMapEditor : MonoBehaviour {
 		enabled = toggle;
 	}
 
+	public void SetPlayerUnit (int toggle)
+	{
+		playerUnitSelector = toggle;
+	}
+
 	public void ShowGrid (bool visible) {
 		if (visible) {
 			terrainMaterial.EnableKeyword("GRID_ON");
@@ -168,12 +175,18 @@ public class HexMapEditor : MonoBehaviour {
 
     void CreateUnit () {
 		HexCell cell = GetCellUnderCursor();
-		if (cell && !cell.Unit) {
+		if (cell && !cell.Unit && playerUnitSelector == 1) {
 			hexGrid.AddUnit(
-				Instantiate(hexUnitPrefab), cell, Random.Range(0f, 360f), currentUnitType
+				Instantiate(hexUnitPrefabP1), cell, Random.Range(0f, 360f), currentUnitType
 			);
 		}
-	}
+        else if (cell && !cell.Unit && playerUnitSelector == 2)
+        {
+            hexGrid.AddUnit(
+                Instantiate(hexUnitPrefabP2), cell, Random.Range(0f, 360f), currentUnitType
+            );
+        }
+    }
 
 	void DestroyUnit () {
 		HexCell cell = GetCellUnderCursor();
@@ -252,13 +265,6 @@ public class HexMapEditor : MonoBehaviour {
 			if (applyPlantLevel) {
 				cell.PlantLevel = activePlantLevel;
 			}
-			if (applyVictoryPoint) {
-				cell.VictoryPoint = applyVictoryPoint;
-				cell.VictoryPointHolder = victoryPointHolder;
-			}
-			if (!applyVictoryPoint) {
-				cell.VictoryPoint = applyVictoryPoint;
-			}
 			if (riverMode == OptionalToggle.No) {
 				cell.RemoveRiver();
 			}
@@ -279,6 +285,39 @@ public class HexMapEditor : MonoBehaviour {
 					}
 				}
 			}
-		}
+            if (applyVictoryPoint)
+            {
+                cell.VictoryPoint = applyVictoryPoint;
+                cell.VictoryPointHolder = victoryPointHolder;
+
+                switch (victoryPointHolder)
+                {
+                    case 0:
+                        if (!hexGrid.player1VictoryPoints.Exists(x => HexCoordinates.IsEqual(x.coordinates, cell.coordinates)))
+                            hexGrid.player1VictoryPoints.Add(cell);
+                        return;
+                    case 1:
+                        if (!hexGrid.player2VictoryPoints.Exists(x => HexCoordinates.IsEqual(x.coordinates, cell.coordinates)))
+                            hexGrid.player2VictoryPoints.Add(cell);
+                        return;
+                }
+            }
+            if (!applyVictoryPoint)
+            {
+                cell.VictoryPoint = applyVictoryPoint;
+
+                switch (cell.VictoryPointHolder)
+                {
+                    case 0:
+                        if (hexGrid.player1VictoryPoints.Exists(x => HexCoordinates.IsEqual(x.coordinates, cell.coordinates)))
+                            hexGrid.player1VictoryPoints.Remove(cell);
+                        return;
+                    case 1:
+                        if (hexGrid.player2VictoryPoints.Exists(x => HexCoordinates.IsEqual(x.coordinates, cell.coordinates)))
+                            hexGrid.player2VictoryPoints.Remove(cell);
+                        return;
+                }
+            }
+        }
 	}
 }

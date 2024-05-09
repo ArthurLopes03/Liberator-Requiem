@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public struct HexCoordinates {
@@ -88,5 +89,11 @@ public struct HexCoordinates {
 		c.x = reader.ReadInt32();
 		c.z = reader.ReadInt32();
 		return c;
+	}
+
+	public static bool IsEqual (HexCoordinates a, HexCoordinates b)
+	{
+		if (a.X == b.X && a.Y == b.Y && a.Z == b.Z) { return true; }
+		else { return false; }
 	}
 }
