@@ -183,7 +183,6 @@ public class HexGameUI : MonoBehaviour {
             if (closestVictoryPoint != null)
 			{
                 possibleMoves = grid.AISearch(unit.Location, closestVictoryPoint, unit.moveSpeed * 10);
-				Debug.Log("Possible moves = " +  possibleMoves.Count);
             }
 
 			// If there is a possible move, it will find the best one
@@ -312,6 +311,6 @@ public class HexGameUI : MonoBehaviour {
 
 	void LoseGame()
 	{
-		SceneManager.LoadScene("LoseScreen");
+		SceneManager.LoadScene("FailScreen");
 	}
 }

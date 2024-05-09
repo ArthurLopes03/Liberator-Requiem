@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using static UnityEditor.FilePathAttribute;
 using Unity.VisualScripting;
 
 public class HexGrid : MonoBehaviour {

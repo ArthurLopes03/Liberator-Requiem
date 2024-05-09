@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexGrid: {fileID: 1571186511}
-  path: Assets/Maps/TestMap.map
+  path: Assets/Maps/TwinCities.map
 --- !u!1 &336930741
 GameObject:
   m_ObjectHideFlags: 0

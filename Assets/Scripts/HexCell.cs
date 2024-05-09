@@ -555,7 +555,23 @@ public class HexCell : MonoBehaviour {
 
 		victoryPoint = reader.ReadBoolean();
 		victoryPointHolder = reader.ReadByte();
-	}
+
+		if( victoryPoint)
+		{
+            HexGrid grid;
+            if (grid = GetComponentInParent<HexGrid>())
+            {
+				if (victoryPointHolder == 0)
+				{
+					grid.player1VictoryPoints.Add(this);
+				}
+				else if( victoryPointHolder == 1)
+				{
+					grid.player2VictoryPoints.Add(this);
+				}
+            }
+        }
+    }
 
 	public void SetLabel (string text) {
 		UnityEngine.UI.Text label = uiRect.GetComponent<Text>();
