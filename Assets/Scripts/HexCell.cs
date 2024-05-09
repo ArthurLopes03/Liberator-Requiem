@@ -461,7 +461,7 @@ public class HexCell : MonoBehaviour {
 		uiRect.localPosition = uiPosition;
 	}
 
-	void Refresh () {
+	public void Refresh () {
 		if (chunk) {
 			chunk.Refresh();
 			for (int i = 0; i < neighbors.Length; i++) {

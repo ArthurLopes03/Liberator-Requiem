@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.IO;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 
 public class HexUnit : MonoBehaviour {
 
@@ -22,6 +23,8 @@ public class HexUnit : MonoBehaviour {
 
 	public int health;
 
+	private int Player;
+
 	public changeAnimations changeAnimations;
 
 	//Changes the unit's stats to those of the SO
@@ -36,6 +39,16 @@ public class HexUnit : MonoBehaviour {
 		UnitDescription = unitType.unitStats.UnitDescription;
 
 		changeAnimations.animatedTextures = unitType.unitStats.animatedTextures;
+
+		if(GetComponent<Transform>().tag == "PlayerOneUnit")
+		{
+			Player = 0;
+		}
+
+        if (GetComponent<Transform>().tag == "PlayerTwoUnit")
+        {
+            Player = 1;
+        }
     }
 
     public HexCell Location {
@@ -49,6 +62,28 @@ public class HexUnit : MonoBehaviour {
 			location = value;
 			value.Unit = this;
 			transform.localPosition = value.Position;
+
+			if(location.VictoryPoint && location.VictoryPointHolder != Player)
+			{
+				location.VictoryPointHolder = Player;
+				location.Refresh();
+
+				HexGrid grid;
+				if(grid = GetComponentInParent<HexGrid>())
+				{
+					switch(Player)
+					{
+						case 0:
+							grid.player2VictoryPoints.Remove(location);
+							grid.player1VictoryPoints.Add(location);
+							return;
+						case 1:
+                            grid.player1VictoryPoints.Remove(location);
+                            grid.player2VictoryPoints.Add(location);
+                            return;
+                    }
+				}
+			}
 		}
 	}
 
@@ -95,10 +130,17 @@ public class HexUnit : MonoBehaviour {
 		);
 	}
 	*/
-
-	public void Attack(HexUnit enemyUnit)
-	{
-		HexCell enemyPosition = enemyUnit.Location;
+	public bool IsInRange (HexUnit enemyUnit)
+    {
+        if (Location.coordinates.DistanceTo(enemyUnit.Location.coordinates) <= range)
+        {
+			return true;
+        }
+		return false;
+    }
+    public void Attack(HexUnit enemyUnit)
+    {
+        HexCell enemyPosition = enemyUnit.Location;
 
         int attackTotal = Mathf.FloorToInt(attackPow * (float)Random.Range(1f,1f));
 
