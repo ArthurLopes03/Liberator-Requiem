@@ -8,15 +8,15 @@ public class LoadMap : MonoBehaviour
 {
     public HexGrid hexGrid;
 
-    public string nameInput;
+    public string path;
 
     // Start is called before the first frame update
     void Start()
     {
-        Load(GetSelectedPath());
+        Load(path);
     }
 
-    string GetSelectedPath()
+    /*string GetSelectedPath()
     {
         string mapName = nameInput;
         if (mapName.Length == 0)
@@ -24,7 +24,7 @@ public class LoadMap : MonoBehaviour
             return null;
         }
         return Path.Combine(Application.persistentDataPath, mapName + ".map");
-    }
+    } */
 
     void Load(string path)
     {
