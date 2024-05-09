@@ -26,7 +26,7 @@ public class HexMapEditor : MonoBehaviour {
 
 	public HexUnit hexUnitPrefabP1, hexUnitPrefabP2;
 
-	int playerUnitSelector;
+	int playerUnitSelector = 1;
 
     public Unit_SO[] unitTypes;
 
