@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scene.unity
     guid: 97bc9753c78424d1e8b9a5f86a27ae68
   - enabled: 1
-    path: Assets/FailScreen.unity
+    path: Assets/WinScreen.unity
     guid: 83496fb1d1614184b9477ffa57f41499
+  - enabled: 1
+    path: Assets/FailScreen.unity
+    guid: 88cf41dde3a51a34c9e59b369cc83b0d
+  - enabled: 1
+    path: Assets/Intro.unity
+    guid: b594aa70af04a2247a3d205e2f19be7d
   m_configObjects: {}
