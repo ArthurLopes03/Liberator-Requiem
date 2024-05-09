@@ -461,7 +461,7 @@ public class HexCell : MonoBehaviour {
 		uiRect.localPosition = uiPosition;
 	}
 
-	void Refresh () {
+	public void Refresh () {
 		if (chunk) {
 			chunk.Refresh();
 			for (int i = 0; i < neighbors.Length; i++) {
@@ -514,6 +514,9 @@ public class HexCell : MonoBehaviour {
 			}
 		}
 		writer.Write((byte)roadFlags);
+
+		writer.Write(victoryPoint);
+		writer.Write((byte)victoryPointHolder);
 	}
 
 	public void Load (BinaryReader reader) {
@@ -549,6 +552,9 @@ public class HexCell : MonoBehaviour {
 		for (int i = 0; i < roads.Length; i++) {
 			roads[i] = (roadFlags & (1 << i)) != 0;
 		}
+
+		victoryPoint = reader.ReadBoolean();
+		victoryPointHolder = reader.ReadByte();
 	}
 
 	public void SetLabel (string text) {

@@ -24,13 +24,9 @@ public class HexMapEditor : MonoBehaviour {
 
 	int victoryPointHolder;
 
-	public HexUnit hexUnitPrefabP1, hexUnitPrefabP2;
+	int playerUnitSelector = 1;
 
-	int playerUnitSelector;
-
-    public Unit_SO[] unitTypes;
-
-    Unit_SO currentUnitType;
+    int currentUnitType;
 
     enum OptionalToggle {
 		Ignore, Yes, No
@@ -141,7 +137,7 @@ public class HexMapEditor : MonoBehaviour {
 		terrainMaterial.DisableKeyword("GRID_ON");
 		SetEditMode(false);
 
-        currentUnitType = unitTypes[0];
+        currentUnitType = 0;
     }
 
     void Update () {
@@ -170,20 +166,20 @@ public class HexMapEditor : MonoBehaviour {
 
     public void SetUnitType(int index)
     {
-        currentUnitType = unitTypes[index];
+        currentUnitType = index;
     }
 
     void CreateUnit () {
 		HexCell cell = GetCellUnderCursor();
 		if (cell && !cell.Unit && playerUnitSelector == 1) {
 			hexGrid.AddUnit(
-				Instantiate(hexUnitPrefabP1), cell, Random.Range(0f, 360f), currentUnitType
+				Instantiate(hexGrid.hexUnitPrefabP1), cell, Random.Range(0f, 360f), currentUnitType
 			);
 		}
         else if (cell && !cell.Unit && playerUnitSelector == 2)
         {
             hexGrid.AddUnit(
-                Instantiate(hexUnitPrefabP2), cell, Random.Range(0f, 360f), currentUnitType
+                Instantiate(hexGrid.hexUnitPrefabP2), cell, Random.Range(0f, 360f), currentUnitType
             );
         }
     }
